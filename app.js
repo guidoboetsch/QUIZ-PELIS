@@ -304,8 +304,31 @@ const legacyMovies = [
 const movies = window.quizMovies || legacyMovies;
 const quizConfig = window.quizConfig || { videoQrImage: '' };
 
+const memoItemsByMovie = {
+  matrix: [['💊','Pastilla'],['🕶️','Anteojos'],['🐇','Conejo'],['💻','Código'],['☎️','Teléfono'],['🥄','Cuchara'],['🔑','Llave'],['🚪','Puerta'],['🤖','Agente']],
+  titanic: [['🚢','Barco'],['💎','Diamante'],['🧊','Iceberg'],['🎻','Violín'],['🚗','Auto'],['🚪','Puerta'],['🌊','Océano'],['🎨','Retrato'],['🚨','Bengala']],
+  backfuture: [['🚗','DeLorean'],['⚡','Rayo'],['🕰️','Reloj'],['🛹','Patineta'],['🎸','Guitarra'],['📸','Foto'],['🔥','Huellas'],['🥼','Doc'],['🏫','Escuela']],
+  harrypotter: [['⚡','Cicatriz'],['🪄','Varita'],['🦉','Lechuza'],['🚂','Tren'],['🧹','Escoba'],['🏰','Castillo'],['🗝️','Llave'],['🪞','Espejo'],['🎩','Sombrero']],
+  jurassic: [['🦖','T-Rex'],['🦕','Braquiosaurio'],['🥚','Huevo'],['🚙','Jeep'],['🧬','ADN'],['🦟','Mosquito'],['🌴','Isla'],['🚧','Cerca'],['🥫','Barbasol']],
+  killbill: [['⚔️','Katana'],['🐍','Mamba'],['💛','Traje'],['🏍️','Moto'],['✈️','Avión'],['👁️','Parche'],['❄️','Nieve'],['🩸','Venganza'],['📋','Lista']],
+  shrek: [['🧅','Cebolla'],['🏰','Castillo'],['🐉','Dragona'],['🐴','Burro'],['👑','Corona'],['💚','Ogro'],['🔥','Pantano'],['👸','Fiona'],['🪞','Espejo']],
+  godfather: [['🍊','Naranjas'],['🐴','Caballo'],['🤵','Traje'],['🌹','Rosa'],['🍝','Pasta'],['🔫','Pistola'],['🚗','Auto'],['🇮🇹','Sicilia'],['💍','Anillo']],
+  lotr: [['💍','Anillo'],['🧙','Mago'],['🗡️','Espada'],['🏔️','Montaña'],['👁️','Ojo'],['🌋','Volcán'],['🧝','Elfo'],['🍃','Hoja'],['🚪','Moria']],
+  starwars: [['⚔️','Sable'],['🤖','Droide'],['⭐','Estrella'],['🚀','Nave'],['👑','Leia'],['🌑','Vader'],['🏜️','Tatooine'],['🛡️','Trooper'],['🛰️','Estación']],
+  avatar: [['🌳','Árbol'],['🔵','Na’vi'],['🪽','Ikran'],['🏹','Arco'],['🌌','Pandora'],['🪶','Pluma'],['🐉','Toruk'],['🔥','Fuego'],['🪨','Montañas']],
+  wolf: [['💵','Dinero'],['📞','Teléfono'],['🖊️','Lapicera'],['🚘','Ferrari'],['⌚','Reloj'],['🛥️','Yate'],['📈','Acciones'],['🎤','Micrófono'],['👔','Corbata']],
+  interstellar: [['🚀','Nave'],['🕳️','Gargantúa'],['🤖','TARS'],['⌚','Reloj'],['🌽','Maíz'],['📚','Biblioteca'],['🪐','Planeta'],['👨‍🚀','Cooper'],['🌊','Ola']],
+  shining: [['🪓','Hacha'],['🚪','Puerta'],['🛎️','Hotel'],['❄️','Nieve'],['🚲','Triciclo'],['⌨️','Máquina'],['🥃','Bourbon'],['🧩','Laberinto'],['👭','Gemelas']],
+  forrest: [['🍫','Bombones'],['🪶','Pluma'],['🏃','Carrera'],['🏓','Ping-pong'],['🚌','Colectivo'],['🦐','Camarón'],['🎖️','Medalla'],['👟','Zapatillas'],['🪑','Banco']],
+  terminator2: [['🤖','Terminator'],['🏍️','Moto'],['🕶️','Anteojos'],['🔥','Fuego'],['🌹','Rosas'],['🔫','Escopeta'],['🧊','Metal'],['🚚','Camión'],['👍','Pulgar']],
+  endgame: [['🛡️','Escudo'],['🔨','Martillo'],['🧤','Guantelete'],['💎','Gema'],['⏳','Tiempo'],['🚀','Nave'],['⚡','Thor'],['🏹','Hawkeye'],['🤖','Armadura']],
+  pirates: [['🏴‍☠️','Bandera'],['🧭','Brújula'],['🚢','Perla Negra'],['💰','Tesoro'],['⚔️','Espada'],['🐒','Mono'],['🌊','Mar'],['💀','Calavera'],['🍾','Ron']],
+  fastfive: [['🚗','Auto'],['🏦','Bóveda'],['💵','Dinero'],['🚓','Policía'],['🌉','Puente'],['🔧','Motor'],['⛓️','Cadena'],['🏙️','Río'],['🏁','Carrera']],
+  nuevereinas: [['📬','Estampillas'],['💼','Valija'],['🏨','Hotel'],['💵','Dólares'],['📰','Diario'],['✍️','Firma'],['🏦','Banco'],['🧾','Cheque'],['👓','Lentes']]
+};
+
 const state = {
-  screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
+  screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 15,
   timerId: null, answerLocked: false, category: 'Todas', search: '', stats: loadStats()
 };
 
@@ -325,8 +348,29 @@ function createQuestionPool(movie) {
     id: `${movie.id}-${factIndex}`,
     text: fact[1],
     answer: fact[2],
-    options: shuffle(fact[3])
+    options: shuffle(fact[3]),
+    kind: 'normal'
   }));
+}
+function buildRoundQuestions(movie) {
+  const regular = shuffle(createQuestionPool(movie)).slice(0, 8);
+  const hardFact = movie.hardFact;
+  const hard = {
+    id: `${movie.id}-hard`,
+    text: hardFact[1],
+    answer: hardFact[2],
+    options: shuffle(hardFact[3]),
+    kind: 'hard'
+  };
+  const memory = {
+    id: `${movie.id}-memo`,
+    kind: 'memo',
+    phase: 'preview',
+    next: 1,
+    solved: [],
+    items: shuffle((memoItemsByMovie[movie.id] || memoItemsByMovie.matrix).map((item, index) => ({ symbol: item[0], label: item[1], order: index + 1 })))
+  };
+  return [...regular, hard, memory];
 }
 function render() {
   document.querySelector('#header-best').textContent = state.stats.best;
@@ -336,7 +380,7 @@ function render() {
 function renderHome() {
   const filtered = getFilteredMovies();
   return `<section class="screen home-screen">
-    <div class="hero"><div><p class="eyebrow">Tu próxima obsesión cinéfila</p><h1>¿Cuánto sabés<br>de <em>películas?</em></h1><p class="hero-copy">Elegí una película, respondé 10 preguntas seguidas y demostrá que no sos un espectador casual.</p></div><div class="hero-note"><strong>10 × 10 seg</strong>Una respuesta incorrecta o un segundo de más y volvés a empezar.</div></div>
+    <div class="hero"><div><p class="eyebrow">Tu próxima obsesión cinéfila</p><h1>¿Cuánto sabés<br>de <em>películas?</em></h1><p class="hero-copy">Elegí una película, respondé 10 preguntas seguidas y demostrá que no sos un espectador casual.</p></div><div class="hero-note"><strong>10 × 15 seg</strong>Una respuesta incorrecta o un segundo de más y volvés a empezar.</div></div>
     <div class="toolbar"><div class="search-wrap"><span>⌕</span><input class="search-input" id="search" type="search" placeholder="Buscar película..." value="${esc(state.search)}" aria-label="Buscar película"></div><div class="filter-pills">${categories().map(category => `<button class="pill ${state.category === category ? 'active' : ''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div></div>
     <p class="results-label">${filtered.length} PELÍCULAS PARA ELEGIR</p>
     <div class="movies-grid">${filtered.length ? filtered.map(renderMovieCard).join('') : '<div class="empty-state">No encontramos esa película. Probá con otro título.</div>'}</div>
@@ -348,7 +392,22 @@ function renderMovieCard(movie) {
 function renderQuiz() {
   const movie = state.selectedMovie, question = state.questions[state.questionIndex];
   const progress = (state.streak / 10) * 100;
-  return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card" id="question-card"><span class="question-kicker">Pregunta ${state.streak + 1} · racha actual ${state.streak}</span><h1 class="question-text">${esc(question.text)}</h1><div class="answers">${question.options.map((option, index) => `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`).join('')}</div><div class="timer-row"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+  if (question.kind === 'memo') return renderMemoQuiz(movie, question, progress);
+  const kicker = question.kind === 'hard' ? 'Pregunta 9 · nivel difícil' : `Pregunta ${state.streak + 1} · racha actual ${state.streak}`;
+  return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card" id="question-card"><span class="question-kicker">${kicker}</span><h1 class="question-text">${esc(question.text)}</h1><div class="answers">${question.options.map((option, index) => `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`).join('')}</div><div class="timer-row"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+}
+function renderMemoQuiz(movie, question, progress) {
+  const isPreview = question.phase === 'preview';
+  const instruction = isPreview ? 'Memoricen dónde está cada número' : `Toquen las cartas en orden · ahora va el ${question.next}`;
+  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1><p class="memo-copy">${isPreview ? 'Tienen 5 segundos. Después las cartas se dan vuelta.' : 'Las imágenes están ocultas. Recuerden la posición del 1, después del 2 y así hasta el 9.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div><div class="timer-row"><span>${isPreview ? 'Tiempo para memorizar' : 'Tiempo para resolver'}</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+}
+function renderMemoTile(item, question) {
+  const isPreview = question.phase === 'preview';
+  const isSolved = question.solved.includes(item.order);
+  const face = isPreview || isSolved
+    ? `<span class="memo-order">${item.order}</span><span class="memo-symbol" aria-hidden="true">${item.symbol}</span><span class="memo-label">${esc(item.label)}</span>`
+    : '<span class="memo-cover" aria-hidden="true">?</span>';
+  return `<button class="memo-tile ${isSolved ? 'solved' : ''}" data-memo-order="${item.order}" ${isPreview || isSolved ? 'disabled' : ''} aria-label="${isPreview ? `Carta ${item.order}: ${esc(item.label)}` : 'Carta oculta'}">${face}</button>`;
 }
 function renderResult() {
   const attemptLabel = state.attempts === 1 ? 'intento' : 'intentos';
@@ -358,14 +417,27 @@ function renderResult() {
   return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card"><p class="qr-title">El siguiente paso</p>${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Volvé al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
-  clearInterval(state.timerId); state.selectedMovie = movie; state.questions = shuffle(createQuestionPool(movie)); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render(); startTimer();
+  clearInterval(state.timerId); state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 15; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render(); startTimer();
 }
 function startTimer() {
-  clearInterval(state.timerId); state.timer = 10; const timerEl = document.querySelector('#timer'); if (timerEl) timerEl.textContent = `00:10`;
+  clearInterval(state.timerId);
+  const question = state.questions[state.questionIndex];
+  const isMemoPreview = question?.kind === 'memo' && question.phase === 'preview';
+  state.timer = isMemoPreview ? 5 : 15;
+  const timerEl = document.querySelector('#timer'); if (timerEl) timerEl.textContent = `00:${String(state.timer).padStart(2, '0')}`;
   state.timerId = setInterval(() => { state.timer -= 1; const el = document.querySelector('#timer'); if (!el) return; el.textContent = `00:${String(state.timer).padStart(2, '0')}`; el.classList.toggle('urgent', state.timer <= 3); if (state.timer <= 0) showLossModal(); }, 1000);
 }
 function showLossModal() {
   if (state.answerLocked || state.screen !== 'quiz') return;
+  const question = state.questions[state.questionIndex];
+  if (question?.kind === 'memo' && question.phase === 'preview') {
+    clearInterval(state.timerId);
+    question.phase = 'recall';
+    state.timer = 15;
+    render();
+    startTimer();
+    return;
+  }
   state.answerLocked = true;
   clearInterval(state.timerId);
   const backdrop = document.querySelector('#modal-backdrop');
@@ -380,7 +452,7 @@ function showLossModal() {
     close.classList.remove('hidden');
     state.streak = 0;
     state.attempts += 1;
-    state.questions = shuffle(createQuestionPool(state.selectedMovie));
+    state.questions = buildRoundQuestions(state.selectedMovie);
     state.questionIndex = 0;
     state.answerLocked = false;
     render();
@@ -397,20 +469,44 @@ function showLossModal() {
 }
 function failRound(reason) {
   if (state.screen !== 'quiz') return; state.answerLocked = true; clearInterval(state.timerId); const card = document.querySelector('#question-card'); if (card) card.classList.add('shake');
-  setTimeout(() => { state.streak = 0; state.attempts += 1; state.questions = shuffle(createQuestionPool(state.selectedMovie)); state.questionIndex = 0; state.answerLocked = false; render(); startTimer(); showToast(`${reason} Racha reiniciada.`); }, 650);
+  setTimeout(() => { state.streak = 0; state.attempts += 1; state.questions = buildRoundQuestions(state.selectedMovie); state.questionIndex = 0; state.answerLocked = false; render(); startTimer(); showToast(`${reason} Racha reiniciada.`); }, 650);
 }
 function answer(option, button) {
   if (state.answerLocked) return; state.answerLocked = true; clearInterval(state.timerId); const question = state.questions[state.questionIndex]; const all = document.querySelectorAll('.answer'); all.forEach(btn => btn.disabled = true);
   if (option === question.answer) { button.classList.add('correct'); state.streak += 1; if (state.streak > state.stats.best) { state.stats.best = state.streak; saveStats(); } if (state.streak === 10) { setTimeout(() => { state.screen = 'result'; state.stats.wins += 1; saveStats(); render(); }, 450); return; } setTimeout(() => { state.questionIndex += 1; state.answerLocked = false; render(); startTimer(); }, 400); }
   else { button.classList.add('wrong'); all.forEach(btn => { if (btn.dataset.answer === question.answer) btn.classList.add('correct'); }); failRound('Respuesta incorrecta.'); }
 }
+function chooseMemoTile(order) {
+  if (state.answerLocked) return;
+  const question = state.questions[state.questionIndex];
+  if (!question || question.kind !== 'memo' || question.phase !== 'recall') return;
+  const chosenOrder = Number(order);
+  if (chosenOrder !== question.next) {
+    failRound(`Era la carta ${question.next}.`);
+    return;
+  }
+  question.solved.push(chosenOrder);
+  question.next += 1;
+  if (question.next > 9) {
+    state.answerLocked = true;
+    clearInterval(state.timerId);
+    state.streak = 10;
+    state.stats.best = Math.max(state.stats.best, state.streak);
+    state.stats.wins += 1;
+    saveStats();
+    setTimeout(() => { state.screen = 'result'; state.answerLocked = false; render(); }, 450);
+    return;
+  }
+  render();
+}
 function showToast(message) { const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message; document.body.appendChild(toast); requestAnimationFrame(() => toast.classList.add('visible')); setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 250); }, 2200); }
-function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Tenés 10 segundos para elegir cada respuesta.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
+function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Tenés 15 segundos para elegir cada respuesta.</span></div><div class="rule"><span class="rule-icon">◆</span><span>La pregunta 9 es la más difícil.</span></div><div class="rule"><span class="rule-icon">▦</span><span>En la 10 ven nueve cartas durante 5 segundos y después deben tocarlas del 1 al 9 sin verlas.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
 function bindEvents() {
   document.querySelectorAll('[data-movie]').forEach(card => { const handler = () => startQuiz(movies.find(movie => movie.id === card.dataset.movie)); card.addEventListener('click', handler); card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handler(); } }); });
   document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => { state.category = button.dataset.category; render(); }));
   document.querySelector('#search')?.addEventListener('input', event => { state.search = event.target.value; const position = event.target.selectionStart; render(); const input = document.querySelector('#search'); input.focus(); input.setSelectionRange(position, position); });
   document.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', () => answer(button.dataset.answer, button)));
+  document.querySelectorAll('[data-memo-order]').forEach(button => button.addEventListener('click', () => chooseMemoTile(button.dataset.memoOrder)));
   document.querySelectorAll('[data-action="go-home"]').forEach(button => button.addEventListener('click', () => { clearInterval(state.timerId); state.screen = 'home'; render(); }));
   document.querySelector('[data-action="quit-quiz"]')?.addEventListener('click', () => { clearInterval(state.timerId); state.screen = 'home'; render(); });
   document.querySelector('[data-action="play-again"]')?.addEventListener('click', () => startQuiz(state.selectedMovie));

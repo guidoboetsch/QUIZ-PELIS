@@ -1,5 +1,5 @@
 window.quizMovies = [
-  { id: 'matrix', title: 'The Matrix', year: 1999, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#103d3b,#0b181c 78%)', facts: [
+  { id: 'matrix', title: 'The Matrix', year: 1999, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#103d3b,#0b181c 78%)', hardFact: ['difícil','¿Cómo se llama el traidor que entrega a Morpheus?','Cypher',['Cypher','Tank','Mouse','Apoc']], facts: [
     ['pastilla','¿De qué color es la pastilla que elige Neo?','Roja',['Roja','Azul','Verde','Blanca']],
     ['actor','¿Quién interpreta a Neo?','Keanu Reeves',['Keanu Reeves','Brad Pitt','Tom Cruise','Christian Bale']],
     ['mentor','¿Cómo se llama el mentor de Neo?','Morpheus',['Morpheus','Cypher','Tank','Mouse']],
@@ -13,7 +13,7 @@ window.quizMovies = [
     ['codigo','¿De qué color se ve el código de Matrix?','Verde',['Verde','Rojo','Azul','Dorado']],
     ['direccion','¿Quiénes dirigieron la película?','Lana y Lilly Wachowski',['Lana y Lilly Wachowski','Los hermanos Russo','Joel y Ethan Coen','Peter y Bobby Farrelly']]
   ]},
-  { id: 'titanic', title: 'Titanic', year: 1997, genre: 'Drama', color: 'linear-gradient(145deg,#315b79,#121b29 78%)', facts: [
+  { id: 'titanic', title: 'Titanic', year: 1997, genre: 'Drama', color: 'linear-gradient(145deg,#315b79,#121b29 78%)', hardFact: ['difícil','¿Cómo se llama el constructor naval que viaja a bordo?','Thomas Andrews',['Thomas Andrews','Bruce Ismay','Edward Smith','John Jacob Astor']], facts: [
     ['actor','¿Quién interpreta a Jack Dawson?','Leonardo DiCaprio',['Leonardo DiCaprio','Matt Damon','Brad Pitt','Johnny Depp']],
     ['actriz','¿Quién interpreta a Rose?','Kate Winslet',['Kate Winslet','Nicole Kidman','Julia Roberts','Sandra Bullock']],
     ['iceberg','¿Contra qué choca el barco?','Un iceberg',['Un iceberg','Otro barco','Un arrecife','Una mina']],
@@ -27,7 +27,7 @@ window.quizMovies = [
     ['musica','¿Quién canta My Heart Will Go On?','Céline Dion',['Céline Dion','Whitney Houston','Mariah Carey','Barbra Streisand']],
     ['oceano','¿En qué océano ocurre el naufragio?','Atlántico Norte',['Atlántico Norte','Pacífico Sur','Índico','Ártico']]
   ]},
-  { id: 'backfuture', title: 'Volver al Futuro', year: 1985, genre: 'Aventura', color: 'linear-gradient(145deg,#614e93,#191426 78%)', facts: [
+  { id: 'backfuture', title: 'Volver al Futuro', year: 1985, genre: 'Aventura', color: 'linear-gradient(145deg,#614e93,#191426 78%)', hardFact: ['difícil','¿Qué nombre cree Lorraine que tiene Marty en 1955?','Calvin Klein',['Calvin Klein','Levi Strauss','Marty Brown','Johnny B. Goode']], facts: [
     ['auto','¿Qué auto se convierte en máquina del tiempo?','DeLorean',['DeLorean','Mustang','Camaro','Porsche']],
     ['velocidad','¿Qué velocidad debe alcanzar el DeLorean?','88 millas por hora',['88 millas por hora','100 millas por hora','77 millas por hora','55 millas por hora']],
     ['cientifico','¿Cómo llaman al científico Emmett Brown?','Doc',['Doc','Profesor','Brownie','Einstein']],
@@ -41,7 +41,7 @@ window.quizMovies = [
     ['torre','¿Dónde debe caer el rayo?','En la torre del reloj',['En la torre del reloj','En la escuela','En el puente','En la casa de Doc']],
     ['director','¿Quién dirigió la película?','Robert Zemeckis',['Robert Zemeckis','Steven Spielberg','John Hughes','Joe Dante']]
   ]},
-  { id: 'harrypotter', title: 'Harry Potter', year: 2001, genre: 'Fantasía', color: 'linear-gradient(145deg,#5c4b2f,#181611 78%)', facts: [
+  { id: 'harrypotter', title: 'Harry Potter', year: 2001, genre: 'Fantasía', color: 'linear-gradient(145deg,#5c4b2f,#181611 78%)', hardFact: ['difícil','¿Qué número tiene la bóveda de la Piedra Filosofal?','713',['713','394','9¾','624']], facts: [
     ['escuela','¿Cómo se llama la escuela de magia?','Hogwarts',['Hogwarts','Beauxbatons','Durmstrang','Ilvermorny']],
     ['casa','¿A qué casa pertenece Harry?','Gryffindor',['Gryffindor','Slytherin','Ravenclaw','Hufflepuff']],
     ['buho','¿Cómo se llama la lechuza de Harry?','Hedwig',['Hedwig','Errol','Pigwidgeon','Fawkes']],
@@ -55,7 +55,7 @@ window.quizMovies = [
     ['patronus','¿Qué forma tiene el Patronus de Harry?','Un ciervo',['Un ciervo','Un lobo','Una nutria','Un fénix']],
     ['objeto','¿Qué objeto decide la casa de cada alumno?','El Sombrero Seleccionador',['El Sombrero Seleccionador','El Cáliz de Fuego','El Espejo de Oesed','La Piedra Filosofal']]
   ]},
-  { id: 'jurassic', title: 'Jurassic Park', year: 1993, genre: 'Aventura', color: 'linear-gradient(145deg,#4b6437,#131a12 78%)', facts: [
+  { id: 'jurassic', title: 'Jurassic Park', year: 1993, genre: 'Aventura', color: 'linear-gradient(145deg,#4b6437,#131a12 78%)', hardFact: ['difícil','¿Qué marca tiene la lata falsa que usa Nedry?','Barbasol',['Barbasol','Gillette','Old Spice','Nivea']], facts: [
     ['isla','¿Cómo se llama la isla del parque?','Isla Nublar',['Isla Nublar','Isla Sorna','Isla Muerta','Isla Calavera']],
     ['creador','¿Quién crea el parque?','John Hammond',['John Hammond','Alan Grant','Ian Malcolm','Henry Wu']],
     ['director','¿Quién dirigió la película?','Steven Spielberg',['Steven Spielberg','James Cameron','George Lucas','Robert Zemeckis']],
@@ -69,7 +69,7 @@ window.quizMovies = [
     ['chicos','¿Cómo se llaman los nietos de Hammond?','Tim y Lex',['Tim y Lex','Zach y Gray','Eric y Kelly','Billy y Sarah']],
     ['profesion','¿Cuál es la especialidad de Ellie Sattler?','Paleobotánica',['Paleobotánica','Genética','Veterinaria','Geología']]
   ]},
-  { id: 'killbill', title: 'Kill Bill', year: 2003, genre: 'Acción', color: 'linear-gradient(145deg,#8d7324,#231d0c 78%)', facts: [
+  { id: 'killbill', title: 'Kill Bill', year: 2003, genre: 'Acción', color: 'linear-gradient(145deg,#8d7324,#231d0c 78%)', hardFact: ['difícil','¿Cuál es el nombre clave de Beatrix Kiddo?','Black Mamba',['Black Mamba','California Mountain Snake','Cottonmouth','Copperhead']], facts: [
     ['novia','¿Quién interpreta a La Novia?','Uma Thurman',['Uma Thurman','Lucy Liu','Daryl Hannah','Vivica A. Fox']],
     ['director','¿Quién dirigió la película?','Quentin Tarantino',['Quentin Tarantino','Robert Rodriguez','Guy Ritchie','David Fincher']],
     ['nombre','¿Cuál es el verdadero nombre de La Novia?','Beatrix Kiddo',['Beatrix Kiddo','Elle Driver','O-Ren Ishii','Vernita Green']],
@@ -83,7 +83,7 @@ window.quizMovies = [
     ['grupo','¿Cómo se llama el grupo de asesinos de Bill?','Escuadrón Asesino Víbora Letal',['Escuadrón Asesino Víbora Letal','Los 88 Maníacos','La Mano Negra','Los Cinco Venenos']],
     ['lugar','¿En qué país consigue Beatrix su espada?','Japón',['Japón','China','Corea del Sur','Tailandia']]
   ]},
-  { id: 'shrek', title: 'Shrek', year: 2001, genre: 'Animación', color: 'linear-gradient(145deg,#60793b,#182012 78%)', facts: [
+  { id: 'shrek', title: 'Shrek', year: 2001, genre: 'Animación', color: 'linear-gradient(145deg,#60793b,#182012 78%)', hardFact: ['difícil','¿Qué número de candidata tiene Fiona en el espejo mágico?','La número 3',['La número 3','La número 1','La número 2','La número 4']], facts: [
     ['especie','¿Qué clase de criatura es Shrek?','Un ogro',['Un ogro','Un troll','Un gigante','Un duende']],
     ['hogar','¿Dónde vive Shrek?','En un pantano',['En un pantano','En un castillo','En una cueva','En un molino']],
     ['amigo','¿Qué animal acompaña a Shrek?','Un burro',['Un burro','Un caballo','Un gato','Un dragón']],
@@ -97,7 +97,7 @@ window.quizMovies = [
     ['rescate','¿Dónde está encerrada Fiona?','En una torre',['En una torre','En un calabozo','En un barco','En un bosque']],
     ['cancion','¿Qué canción suena al comienzo?','All Star',['All Star','I’m a Believer','Hallelujah','Accidentally in Love']]
   ]},
-  { id: 'godfather', title: 'El Padrino', year: 1972, genre: 'Drama', color: 'linear-gradient(145deg,#5b251d,#191113 78%)', facts: [
+  { id: 'godfather', title: 'El Padrino', year: 1972, genre: 'Drama', color: 'linear-gradient(145deg,#5b251d,#191113 78%)', hardFact: ['difícil','¿Qué fruta aparece repetidamente como presagio de muerte?','Naranjas',['Naranjas','Manzanas','Uvas','Limones']], facts: [
     ['familia','¿Qué familia protagoniza la historia?','Los Corleone',['Los Corleone','Los Barzini','Los Tattaglia','Los Soprano']],
     ['padrino','¿Quién interpreta a Vito Corleone?','Marlon Brando',['Marlon Brando','Al Pacino','Robert De Niro','James Caan']],
     ['hijo','¿Qué hijo termina al frente de la familia?','Michael',['Michael','Sonny','Fredo','Tom']],
@@ -111,7 +111,7 @@ window.quizMovies = [
     ['negocio','¿Qué nuevo negocio rechaza Vito?','Narcotráfico',['Narcotráfico','Casinos','Alcohol','Apuestas']],
     ['esposa','¿Cómo se llama la novia y luego esposa de Michael?','Kay Adams',['Kay Adams','Connie Corleone','Apollonia Vitelli','Lucy Mancini']]
   ]},
-  { id: 'lotr', title: 'El Señor de los Anillos', year: 2001, genre: 'Fantasía', color: 'linear-gradient(145deg,#564123,#1d1710 78%)', facts: [
+  { id: 'lotr', title: 'El Señor de los Anillos', year: 2001, genre: 'Fantasía', color: 'linear-gradient(145deg,#564123,#1d1710 78%)', hardFact: ['difícil','¿Qué palabra abre las puertas de Moria?','Mellon',['Mellon','Mordor','Mithril','Namárië']], facts: [
     ['portador','¿Quién lleva el Anillo Único?','Frodo Bolsón',['Frodo Bolsón','Bilbo Bolsón','Sam Gamyi','Aragorn']],
     ['amigo','¿Quién acompaña a Frodo hasta el final?','Sam Gamyi',['Sam Gamyi','Merry','Pippin','Boromir']],
     ['destruccion','¿Dónde debe destruirse el Anillo?','Monte del Destino',['Monte del Destino','Minas Tirith','Rivendel','La Montaña Solitaria']],
@@ -125,7 +125,7 @@ window.quizMovies = [
     ['director','¿Quién dirigió la trilogía?','Peter Jackson',['Peter Jackson','George Lucas','Guillermo del Toro','Sam Raimi']],
     ['comunidad','¿Cuántos miembros tiene la Comunidad original?','Nueve',['Nueve','Siete','Ocho','Diez']]
   ]},
-  { id: 'starwars', title: 'Star Wars', year: 1977, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#3d416a,#11131e 78%)', facts: [
+  { id: 'starwars', title: 'Star Wars', year: 1977, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#3d416a,#11131e 78%)', hardFact: ['difícil','¿Qué número tiene la celda de Leia en la Estrella de la Muerte?','2187',['2187','1138','327','1977']], facts: [
     ['padre','¿Quién es el padre de Luke Skywalker?','Darth Vader',['Darth Vader','Obi-Wan Kenobi','Yoda','Palpatine']],
     ['hermana','¿Quién es la hermana de Luke?','Leia Organa',['Leia Organa','Padmé Amidala','Rey','Ahsoka Tano']],
     ['maestro','¿Qué pequeño maestro Jedi entrena a Luke?','Yoda',['Yoda','Qui-Gon Jinn','Mace Windu','Ki-Adi-Mundi']],
@@ -139,7 +139,7 @@ window.quizMovies = [
     ['orden','¿Cómo se llama la orden de caballeros de la Fuerza?','Jedi',['Jedi','Sith','Mandalorianos','Clones']],
     ['creador','¿Quién creó la saga?','George Lucas',['George Lucas','Steven Spielberg','J. J. Abrams','Irvin Kershner']]
   ]},
-  { id: 'avatar', title: 'Avatar', year: 2009, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#235f76,#101b25 78%)', facts: [
+  { id: 'avatar', title: 'Avatar', year: 2009, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#235f76,#101b25 78%)', hardFact: ['difícil','¿Cómo llaman los Na’vi al gran leonóptero rojo?','Toruk',['Toruk','Ikran','Palulukan','Tulkun']], facts: [
     ['planeta','¿Cómo se llama la luna donde viven los Na’vi?','Pandora',['Pandora','Endor','Arrakis','Krypton']],
     ['protagonista','¿Cómo se llama el protagonista?','Jake Sully',['Jake Sully','Miles Quaritch','Norm Spellman','Tommy Sully']],
     ['navi','¿Cómo se llama la guerrera Na’vi que ayuda a Jake?','Neytiri',['Neytiri','Mo’at','Grace','Trudy']],
@@ -153,7 +153,7 @@ window.quizMovies = [
     ['corporacion','¿Qué sigla identifica a la organización humana?','RDA',['RDA','Weyland','NASA','UNSC']],
     ['coronel','¿Cómo se apellida el coronel antagonista?','Quaritch',['Quaritch','Sully','Selfridge','Tsu’tey']]
   ]},
-  { id: 'wolf', title: 'El lobo de Wall Street', year: 2013, genre: 'Comedia', color: 'linear-gradient(145deg,#587246,#151b12 78%)', facts: [
+  { id: 'wolf', title: 'El lobo de Wall Street', year: 2013, genre: 'Comedia', color: 'linear-gradient(145deg,#587246,#151b12 78%)', hardFact: ['difícil','¿Cómo se llama el método de ventas que enseña Jordan?','Sistema de la línea recta',['Sistema de la línea recta','Método Oakmont','Círculo de cierre','Estrategia del lobo']], facts: [
     ['protagonista','¿Cómo se llama el corredor de bolsa protagonista?','Jordan Belfort',['Jordan Belfort','Donnie Azoff','Mark Hanna','Patrick Denham']],
     ['actor','¿Quién interpreta a Jordan Belfort?','Leonardo DiCaprio',['Leonardo DiCaprio','Matt Damon','Christian Bale','Bradley Cooper']],
     ['director','¿Quién dirigió la película?','Martin Scorsese',['Martin Scorsese','Oliver Stone','David Fincher','Adam McKay']],
@@ -167,7 +167,7 @@ window.quizMovies = [
     ['pais','¿En qué país esconden dinero?','Suiza',['Suiza','Mónaco','Panamá','Luxemburgo']],
     ['hecho','¿La historia está basada en una persona real?','Sí',['Sí','No','Sólo el final','Sólo los personajes secundarios']]
   ]},
-  { id: 'interstellar', title: 'Interestelar', year: 2014, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#352c65,#10131f 78%)', facts: [
+  { id: 'interstellar', title: 'Interestelar', year: 2014, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#352c65,#10131f 78%)', hardFact: ['difícil','¿En qué porcentaje fija Cooper la honestidad de TARS?','90%',['90%','75%','100%','65%']], facts: [
     ['director','¿Quién dirigió la película?','Christopher Nolan',['Christopher Nolan','Denis Villeneuve','James Cameron','Ridley Scott']],
     ['piloto','¿Cómo se llama el piloto protagonista?','Cooper',['Cooper','Mann','Doyle','Romilly']],
     ['hija','¿Cómo se llama la hija de Cooper?','Murph',['Murph','Amelia','Lois','Jess']],
@@ -181,7 +181,7 @@ window.quizMovies = [
     ['mensaje','¿Qué usa Cooper para comunicarse desde el teseracto?','La gravedad',['La gravedad','La luz','El sonido','La electricidad']],
     ['nave','¿Cómo se llama la nave principal?','Endurance',['Endurance','Ranger','Lazarus','Discovery']]
   ]},
-  { id: 'shining', title: 'El resplandor', year: 1980, genre: 'Terror', color: 'linear-gradient(145deg,#763a3e,#1f1418 78%)', facts: [
+  { id: 'shining', title: 'El resplandor', year: 1980, genre: 'Terror', color: 'linear-gradient(145deg,#763a3e,#1f1418 78%)', hardFact: ['difícil','¿Qué bebida le sirve Lloyd a Jack en el bar?','Bourbon',['Bourbon','Gin','Vodka','Ron']], facts: [
     ['hotel','¿Cómo se llama el hotel?','Overlook',['Overlook','Bates','Stanley','Colorado Grand']],
     ['protagonista','¿Quién interpreta a Jack Torrance?','Jack Nicholson',['Jack Nicholson','Anthony Hopkins','Robert De Niro','Gene Hackman']],
     ['hijo','¿Cómo se llama el hijo de Jack?','Danny',['Danny','Tony','Dick','Lloyd']],
@@ -195,7 +195,7 @@ window.quizMovies = [
     ['director','¿Quién dirigió la película?','Stanley Kubrick',['Stanley Kubrick','Alfred Hitchcock','John Carpenter','Roman Polanski']],
     ['autor','¿Quién escribió la novela original?','Stephen King',['Stephen King','Dean Koontz','Clive Barker','Edgar Allan Poe']]
   ]},
-  { id: 'forrest', title: 'Forrest Gump', year: 1994, genre: 'Drama', color: 'linear-gradient(145deg,#496b86,#151d24 78%)', facts: [
+  { id: 'forrest', title: 'Forrest Gump', year: 1994, genre: 'Drama', color: 'linear-gradient(145deg,#496b86,#151d24 78%)', hardFact: ['difícil','¿Qué número usa Forrest en el equipo de Alabama?','44',['44','12','23','7']], facts: [
     ['actor','¿Quién interpreta a Forrest?','Tom Hanks',['Tom Hanks','Robin Williams','Kevin Costner','John Travolta']],
     ['amor','¿Cómo se llama el gran amor de Forrest?','Jenny',['Jenny','Dorothy','Susan','Louise']],
     ['amigo','¿Cómo se llama su amigo del ejército?','Bubba',['Bubba','Dan','Elvis','Benjamin']],
@@ -209,7 +209,7 @@ window.quizMovies = [
     ['banco','¿Dónde cuenta gran parte de su historia?','En un banco de plaza',['En un banco de plaza','En un tren','En un hospital','En un bar']],
     ['director','¿Quién dirigió la película?','Robert Zemeckis',['Robert Zemeckis','Steven Spielberg','Ron Howard','Frank Darabont']]
   ]},
-  { id: 'terminator2', title: 'Terminator 2', year: 1991, genre: 'Acción', color: 'linear-gradient(145deg,#48515b,#15191e 78%)', facts: [
+  { id: 'terminator2', title: 'Terminator 2', year: 1991, genre: 'Acción', color: 'linear-gradient(145deg,#48515b,#15191e 78%)', hardFact: ['difícil','¿Cómo se llaman los padres adoptivos de John Connor?','Janelle y Todd',['Janelle y Todd','Sarah y Kyle','Ginger y Matt','Kate y Scott']], facts: [
     ['protector','¿Qué modelo de Terminator protege a John Connor?','T-800',['T-800','T-1000','T-X','Rev-9']],
     ['actor','¿Quién interpreta al T-800?','Arnold Schwarzenegger',['Arnold Schwarzenegger','Sylvester Stallone','Jean-Claude Van Damme','Dolph Lundgren']],
     ['enemigo','¿De qué material parece estar hecho el T-1000?','Metal líquido',['Metal líquido','Titanio','Acero sólido','Nanofibras']],
@@ -223,7 +223,7 @@ window.quizMovies = [
     ['final','¿Qué gesto hace el T-800 al hundirse?','Levanta el pulgar',['Levanta el pulgar','Hace la V','Saluda','Cierra el puño']],
     ['director','¿Quién dirigió la película?','James Cameron',['James Cameron','Paul Verhoeven','John McTiernan','Ridley Scott']]
   ]},
-  { id: 'endgame', title: 'Avengers: Endgame', year: 2019, genre: 'Acción', color: 'linear-gradient(145deg,#5b3f78,#1a1323 78%)', facts: [
+  { id: 'endgame', title: 'Avengers: Endgame', year: 2019, genre: 'Acción', color: 'linear-gradient(145deg,#5b3f78,#1a1323 78%)', hardFact: ['difícil','¿A qué año viajan Tony y Steve después de fallar en 2012?','1970',['1970','1965','1980','1991']], facts: [
     ['villano','¿Quién eliminó a la mitad del universo?','Thanos',['Thanos','Ultron','Loki','Ronan']],
     ['sacrificio','¿Quién se sacrifica usando las Gemas del Infinito?','Tony Stark',['Tony Stark','Steve Rogers','Thor','Bruce Banner']],
     ['vormir','¿Quién muere en Vormir?','Natasha Romanoff',['Natasha Romanoff','Wanda Maximoff','Nebula','Gamora']],
@@ -237,7 +237,7 @@ window.quizMovies = [
     ['directores','¿Quiénes dirigieron la película?','Anthony y Joe Russo',['Anthony y Joe Russo','Joel y Ethan Coen','Lana y Lilly Wachowski','Peter y Bobby Farrelly']],
     ['año','¿Cuántos años pasan después del chasquido de Thanos?','Cinco',['Cinco','Tres','Siete','Diez']]
   ]},
-  { id: 'pirates', title: 'Piratas del Caribe', year: 2003, genre: 'Aventura', color: 'linear-gradient(145deg,#625337,#1b1812 78%)', facts: [
+  { id: 'pirates', title: 'Piratas del Caribe', year: 2003, genre: 'Aventura', color: 'linear-gradient(145deg,#625337,#1b1812 78%)', hardFact: ['difícil','¿Cómo se llama el padre de Will Turner?','Bootstrap Bill',['Bootstrap Bill','Cotton Bill','Black Bart','Weatherby Swann']], facts: [
     ['capitan','¿Cómo se llama el capitán interpretado por Johnny Depp?','Jack Sparrow',['Jack Sparrow','Héctor Barbossa','Will Turner','Davy Jones']],
     ['barco','¿Cómo se llama el barco de Jack Sparrow?','Perla Negra',['Perla Negra','Holandés Errante','Interceptor','Venganza de la Reina Ana']],
     ['herrero','¿Cuál es el oficio de Will Turner al comienzo?','Herrero',['Herrero','Marinero','Soldado','Carpintero']],
@@ -251,7 +251,7 @@ window.quizMovies = [
     ['lugar','¿En qué puerto vive Elizabeth?','Port Royal',['Port Royal','Tortuga','Nassau','Singapur']],
     ['bebida','¿Cuál es la bebida favorita de Jack?','Ron',['Ron','Whisky','Vino','Cerveza']]
   ]},
-  { id: 'fastfive', title: 'Rápidos y Furiosos 5', year: 2011, genre: 'Acción', color: 'linear-gradient(145deg,#5b5d67,#18191e 78%)', facts: [
+  { id: 'fastfive', title: 'Rápidos y Furiosos 5', year: 2011, genre: 'Acción', color: 'linear-gradient(145deg,#5b5d67,#18191e 78%)', hardFact: ['difícil','¿Cuánto dinero contiene la bóveda que roba el equipo?','100 millones de dólares',['100 millones de dólares','50 millones de dólares','200 millones de dólares','25 millones de dólares']], facts: [
     ['ciudad','¿En qué ciudad ocurre el gran golpe?','Río de Janeiro',['Río de Janeiro','Miami','Los Ángeles','Tokio']],
     ['dom','¿Quién interpreta a Dominic Toretto?','Vin Diesel',['Vin Diesel','Paul Walker','Dwayne Johnson','Jason Statham']],
     ['brian','¿Quién interpreta a Brian O’Conner?','Paul Walker',['Paul Walker','Vin Diesel','Tyrese Gibson','Ludacris']],
@@ -265,7 +265,7 @@ window.quizMovies = [
     ['familia','¿Cómo se llama la hermana de Dom?','Mia',['Mia','Letty','Elena','Monica']],
     ['director','¿Quién dirigió la película?','Justin Lin',['Justin Lin','James Wan','Rob Cohen','John Singleton']]
   ]},
-  { id: 'nuevereinas', title: 'Nueve Reinas', year: 2000, genre: 'Crimen', color: 'linear-gradient(145deg,#6e5838,#1c1812 78%)', facts: [
+  { id: 'nuevereinas', title: 'Nueve Reinas', year: 2000, genre: 'Crimen', color: 'linear-gradient(145deg,#6e5838,#1c1812 78%)', hardFact: ['difícil','¿Cómo se apellida el falsificador que copia las estampillas?','Sandler',['Sandler','Gandolfo','Castex','Bielski']], facts: [
     ['marcos','¿Quién interpreta a Marcos?','Ricardo Darín',['Ricardo Darín','Gastón Pauls','Diego Peretti','Guillermo Francella']],
     ['juan','¿Quién interpreta a Juan?','Gastón Pauls',['Gastón Pauls','Ricardo Darín','Pablo Echarri','Leonardo Sbaraglia']],
     ['objeto','¿Qué son las Nueve Reinas?','Una colección de estampillas',['Una colección de estampillas','Nueve monedas','Un mazo de cartas','Nueve pinturas']],

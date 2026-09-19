@@ -96,6 +96,20 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .timer.urgent { color: var(--red); animation: pulse .65s infinite alternate; }
 @keyframes pulse { to { transform: scale(1.15); } }
 
+.memo-card { padding-top: clamp(22px, 4vw, 38px); }
+.memo-title { margin-bottom: 8px; }
+.memo-copy { color: var(--muted); font-size: .82rem; line-height: 1.5; margin: 0 0 22px; }
+.memo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.memo-tile { position: relative; aspect-ratio: 1; min-width: 0; border: 1px solid var(--border); border-radius: 15px; background: var(--surface-2); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; overflow: hidden; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+.memo-tile:not(:disabled):hover { border-color: var(--yellow); transform: translateY(-2px); background: var(--surface-3); }
+.memo-tile:disabled { cursor: default; opacity: 1; }
+.memo-order { position: absolute; top: 7px; left: 8px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 7px; background: var(--yellow); color: var(--bg); font: 700 .68rem 'DM Mono', monospace; }
+.memo-symbol { font-size: clamp(1.7rem, 7vw, 2.7rem); line-height: 1; }
+.memo-label { color: var(--muted); font-size: clamp(.55rem, 2.3vw, .72rem); max-width: 90%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.memo-cover { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(247,200,75,.38); border-radius: 14px; color: var(--yellow); font: 500 1.45rem 'DM Mono', monospace; background: rgba(247,200,75,.06); }
+.memo-tile.solved { border-color: var(--green); background: rgba(120,223,170,.1); }
+.memo-tile.solved .memo-order { background: var(--green); }
+
 .result-screen { max-width: 980px; text-align: center; padding-top: 42px; }
 .result-layout { display: grid; grid-template-columns: minmax(0,1fr) 350px; align-items: center; gap: clamp(30px, 7vw, 80px); }
 .result-celebration, .result-side { min-width: 0; }
@@ -161,6 +175,10 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
   .answers { grid-template-columns: 1fr; }
   .answer { padding: 14px; min-height: 53px; }
   .question-text { margin-bottom: 25px; }
+  .memo-card { padding: 22px 15px; }
+  .memo-grid { gap: 7px; }
+  .memo-tile { border-radius: 12px; }
+  .memo-copy { font-size: .75rem; margin-bottom: 16px; }
   .result-screen { padding-top: 38px; }
   .result-layout { grid-template-columns: 1fr; gap: 10px; }
   .result-side { width: 100%; }
