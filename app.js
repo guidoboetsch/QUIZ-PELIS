@@ -400,7 +400,10 @@ function renderQuiz() {
 function renderMemoQuiz(movie, question, progress) {
   const isPreview = question.phase === 'preview';
   const instruction = isPreview ? 'Memoricen dónde está cada número' : `Toquen las cartas en orden · ahora va el ${question.next}`;
-  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1><p class="memo-copy">${isPreview ? 'Tienen 15 segundos. Después las cartas se dan vuelta.' : 'Las imágenes están ocultas. Recuerden la posición del 1, después del 2 y así hasta el 9.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div><div class="timer-row"><span>${isPreview ? 'Tiempo para memorizar' : 'Tiempo para resolver'}</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+  const timerMarkup = isPreview
+    ? `<div class="timer-row"><span>Tiempo para memorizar</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div>`
+    : '<div class="timer-row memo-no-limit"><span>Sin límite de tiempo</span><span class="timer">∞</span></div>';
+  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1><p class="memo-copy">${isPreview ? 'Tienen 15 segundos. Después las cartas se dan vuelta.' : 'Las imágenes están ocultas y no hay reloj. Elijan con cuidado: un error reinicia todo el quiz.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div>${timerMarkup}</div></section>`;
 }
 function renderMemoTile(item, question) {
   const isPreview = question.phase === 'preview';
@@ -424,7 +427,13 @@ function startTimer() {
   clearInterval(state.timerId);
   const question = state.questions[state.questionIndex];
   const isMemoPreview = question?.kind === 'memo' && question.phase === 'preview';
-  state.timer = isMemoPreview ? 15 : 10;
+  const isMemoRecall = question?.kind === 'memo' && question.phase === 'recall';
+  if (isMemoRecall) {
+    state.timer = 0;
+    state.timerId = null;
+    return;
+  }
+  state.timer = isMemoPreview || question?.kind === 'hard' ? 15 : 10;
   const timerEl = document.querySelector('#timer'); if (timerEl) timerEl.textContent = `00:${String(state.timer).padStart(2, '0')}`;
   state.timerId = setInterval(() => { state.timer -= 1; const el = document.querySelector('#timer'); if (!el) return; el.textContent = `00:${String(state.timer).padStart(2, '0')}`; el.classList.toggle('urgent', state.timer <= 3); if (state.timer <= 0) showLossModal(); }, 1000);
 }
@@ -501,7 +510,7 @@ function chooseMemoTile(order) {
   render();
 }
 function showToast(message) { const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message; document.body.appendChild(toast); requestAnimationFrame(() => toast.classList.add('visible')); setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 250); }, 2200); }
-function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Las preguntas 1 a 9 tienen 10 segundos.</span></div><div class="rule"><span class="rule-icon">◆</span><span>La pregunta 9 es la más difícil.</span></div><div class="rule"><span class="rule-icon">▦</span><span>En la 10 ven nueve cartas durante 15 segundos y después tienen 10 segundos para tocarlas del 1 al 9 sin verlas.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
+function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Las preguntas 1 a 8 tienen 10 segundos.</span></div><div class="rule"><span class="rule-icon">◆</span><span>La pregunta 9 es la más difícil y tiene 15 segundos.</span></div><div class="rule"><span class="rule-icon">▦</span><span>En la 10 ven nueve cartas durante 15 segundos. Después deben tocarlas del 1 al 9 sin verlas, pero ya sin límite de tiempo.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás cualquier respuesta o una posición del memo-test, el quiz vuelve a empezar.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo en las preguntas 1 a 9, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
 function bindEvents() {
   document.querySelectorAll('[data-movie]').forEach(card => { const handler = () => startQuiz(movies.find(movie => movie.id === card.dataset.movie)); card.addEventListener('click', handler); card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handler(); } }); });
   document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => { state.category = button.dataset.category; render(); }));
