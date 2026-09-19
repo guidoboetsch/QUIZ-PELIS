@@ -302,6 +302,7 @@ const legacyMovies = [
 ].slice(0, 20);
 
 const movies = window.quizMovies || legacyMovies;
+const quizConfig = window.quizConfig || { videoUrl: '', videoQrImage: '' };
 
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
@@ -350,8 +351,11 @@ function renderQuiz() {
   return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card" id="question-card"><span class="question-kicker">Pregunta ${state.streak + 1} · racha actual ${state.streak}</span><h1 class="question-text">${esc(question.text)}</h1><div class="answers">${question.options.map((option, index) => `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`).join('')}</div><div class="timer-row"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
 }
 function renderResult() {
-  const movie = state.selectedMovie;
-  return `<section class="screen result-screen"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Lo hiciste<br><em>perfecto.</em></h1><p class="result-subtitle">Diez respuestas correctas seguidas en <strong>${esc(movie.title)}</strong>. Eso ya es nivel maratón.</p><div class="result-stats"><div class="result-stat"><strong>10/10</strong><span>Aciertos</span></div><div class="result-stat"><strong>${state.attempts}</strong><span>Intentos</span></div><div class="result-stat"><strong>${state.stats.best}</strong><span>Mejor racha</span></div></div><div class="button-row"><button class="primary-button" data-action="play-again">Jugar de nuevo</button><button class="secondary-button" data-action="go-home">Elegir otra</button></div></section>`;
+  const attemptLabel = state.attempts === 1 ? 'intento' : 'intentos';
+  const qrContent = quizConfig.videoUrl && quizConfig.videoQrImage
+    ? `<a class="qr-link" href="${esc(quizConfig.videoUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Abrir el video sorpresa"><img src="${esc(quizConfig.videoQrImage)}" alt="Código QR para abrir el video sorpresa"></a><p>Escaneá el QR para ver el video.</p>`
+    : `<div class="qr-placeholder" aria-label="Código QR pendiente">QR</div><p>Acá va a aparecer el QR del video.</p>`;
+  return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card"><p class="qr-title">El siguiente paso</p>${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Volvé al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
   clearInterval(state.timerId); state.selectedMovie = movie; state.questions = shuffle(createQuestionPool(movie)); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render(); startTimer();

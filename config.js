@@ -1,0 +1,4 @@
+window.quizConfig = {
+  videoUrl: '',
+  videoQrImage: ''
+};
