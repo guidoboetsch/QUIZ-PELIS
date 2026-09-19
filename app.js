@@ -328,7 +328,7 @@ const memoItemsByMovie = {
 };
 
 const state = {
-  screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 15,
+  screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
   timerId: null, answerLocked: false, category: 'Todas', search: '', stats: loadStats()
 };
 
@@ -380,7 +380,7 @@ function render() {
 function renderHome() {
   const filtered = getFilteredMovies();
   return `<section class="screen home-screen">
-    <div class="hero"><div><p class="eyebrow">Tu próxima obsesión cinéfila</p><h1>¿Cuánto sabés<br>de <em>películas?</em></h1><p class="hero-copy">Elegí una película, respondé 10 preguntas seguidas y demostrá que no sos un espectador casual.</p></div><div class="hero-note"><strong>10 × 15 seg</strong>Una respuesta incorrecta o un segundo de más y volvés a empezar.</div></div>
+    <div class="hero"><div><p class="eyebrow">Tu próxima obsesión cinéfila</p><h1>¿Cuánto sabés<br>de <em>películas?</em></h1><p class="hero-copy">Elegí una película, respondé 10 preguntas seguidas y demostrá que no sos un espectador casual.</p></div><div class="hero-note"><strong>10 segundos</strong>Una respuesta incorrecta o un segundo de más y volvés a empezar.</div></div>
     <div class="toolbar"><div class="search-wrap"><span>⌕</span><input class="search-input" id="search" type="search" placeholder="Buscar película..." value="${esc(state.search)}" aria-label="Buscar película"></div><div class="filter-pills">${categories().map(category => `<button class="pill ${state.category === category ? 'active' : ''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div></div>
     <p class="results-label">${filtered.length} PELÍCULAS PARA ELEGIR</p>
     <div class="movies-grid">${filtered.length ? filtered.map(renderMovieCard).join('') : '<div class="empty-state">No encontramos esa película. Probá con otro título.</div>'}</div>
@@ -400,7 +400,7 @@ function renderQuiz() {
 function renderMemoQuiz(movie, question, progress) {
   const isPreview = question.phase === 'preview';
   const instruction = isPreview ? 'Memoricen dónde está cada número' : `Toquen las cartas en orden · ahora va el ${question.next}`;
-  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1><p class="memo-copy">${isPreview ? 'Tienen 5 segundos. Después las cartas se dan vuelta.' : 'Las imágenes están ocultas. Recuerden la posición del 1, después del 2 y así hasta el 9.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div><div class="timer-row"><span>${isPreview ? 'Tiempo para memorizar' : 'Tiempo para resolver'}</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1><p class="memo-copy">${isPreview ? 'Tienen 15 segundos. Después las cartas se dan vuelta.' : 'Las imágenes están ocultas. Recuerden la posición del 1, después del 2 y así hasta el 9.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div><div class="timer-row"><span>${isPreview ? 'Tiempo para memorizar' : 'Tiempo para resolver'}</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
 }
 function renderMemoTile(item, question) {
   const isPreview = question.phase === 'preview';
@@ -418,13 +418,13 @@ function renderResult() {
   return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card"><p class="qr-title">El siguiente paso</p>${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Volvé al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
-  clearInterval(state.timerId); state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 15; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render(); startTimer();
+  clearInterval(state.timerId); state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render(); startTimer();
 }
 function startTimer() {
   clearInterval(state.timerId);
   const question = state.questions[state.questionIndex];
   const isMemoPreview = question?.kind === 'memo' && question.phase === 'preview';
-  state.timer = isMemoPreview ? 5 : 15;
+  state.timer = isMemoPreview ? 15 : 10;
   const timerEl = document.querySelector('#timer'); if (timerEl) timerEl.textContent = `00:${String(state.timer).padStart(2, '0')}`;
   state.timerId = setInterval(() => { state.timer -= 1; const el = document.querySelector('#timer'); if (!el) return; el.textContent = `00:${String(state.timer).padStart(2, '0')}`; el.classList.toggle('urgent', state.timer <= 3); if (state.timer <= 0) showLossModal(); }, 1000);
 }
@@ -434,7 +434,7 @@ function showLossModal() {
   if (question?.kind === 'memo' && question.phase === 'preview') {
     clearInterval(state.timerId);
     question.phase = 'recall';
-    state.timer = 15;
+    state.timer = 10;
     render();
     startTimer();
     return;
@@ -501,7 +501,7 @@ function chooseMemoTile(order) {
   render();
 }
 function showToast(message) { const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message; document.body.appendChild(toast); requestAnimationFrame(() => toast.classList.add('visible')); setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 250); }, 2200); }
-function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Tenés 15 segundos para elegir cada respuesta.</span></div><div class="rule"><span class="rule-icon">◆</span><span>La pregunta 9 es la más difícil.</span></div><div class="rule"><span class="rule-icon">▦</span><span>En la 10 ven nueve cartas durante 5 segundos y después deben tocarlas del 1 al 9 sin verlas.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
+function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Las preguntas 1 a 9 tienen 10 segundos.</span></div><div class="rule"><span class="rule-icon">◆</span><span>La pregunta 9 es la más difícil.</span></div><div class="rule"><span class="rule-icon">▦</span><span>En la 10 ven nueve cartas durante 15 segundos y después tienen 10 segundos para tocarlas del 1 al 9 sin verlas.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
 function bindEvents() {
   document.querySelectorAll('[data-movie]').forEach(card => { const handler = () => startQuiz(movies.find(movie => movie.id === card.dataset.movie)); card.addEventListener('click', handler); card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handler(); } }); });
   document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => { state.category = button.dataset.category; render(); }));
