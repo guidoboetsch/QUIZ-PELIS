@@ -15,6 +15,7 @@ Luego abrir <http://localhost:4173>.
 ## Incluye
 
 - 20 películas elegidas a partir de las favoritas de los invitados.
+- Selección visual mediante 20 pósters locales, sin mostrar títulos, años ni géneros en las tarjetas.
 - 12 preguntas directas por película (240 preguntas en total).
 - Búsqueda y filtro por género.
 - Timer de 15 segundos por pregunta.

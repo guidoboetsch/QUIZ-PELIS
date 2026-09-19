@@ -387,7 +387,8 @@ function renderHome() {
   </section>`;
 }
 function renderMovieCard(movie) {
-  return `<article class="movie-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Jugar ${esc(movie.title)}"><div class="poster" style="background:${movie.color}"><span class="poster-number">${String(movies.indexOf(movie) + 1).padStart(2, '0')}</span><span class="poster-title">${esc(movie.title)}</span></div><div class="movie-card-body"><div class="movie-meta"><span>${movie.year} · ${esc(movie.genre)}</span><span>${movie.facts.length} Q</span></div></div></article>`;
+  const number = String(movies.indexOf(movie) + 1).padStart(2, '0');
+  return `<article class="movie-card poster-only-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Elegir póster ${number}"><div class="poster" style="background:${movie.color}"><img class="poster-image" src="assets/posters/${movie.id}.jpg" alt="" loading="lazy"><span class="poster-number">${number}</span><span class="poster-choice">Elegir</span></div></article>`;
 }
 function renderQuiz() {
   const movie = state.selectedMovie, question = state.questions[state.questionIndex];
