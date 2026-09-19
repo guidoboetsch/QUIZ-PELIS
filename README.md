@@ -20,6 +20,6 @@ Luego abrir <http://localhost:4173>.
 - Timer de 10 segundos por pregunta.
 - Reinicio de la racha al fallar.
 - Modal al agotar el tiempo para volver a intentarlo o rendirse.
-- Pantalla final con la respuesta del acertijo, cantidad de intentos y espacio configurable para el QR de un video.
+- Pantalla final con la respuesta del acertijo, cantidad de intentos y un QR no clickeable para abrir un video desde otro celular.
 - Mejor racha, intentos y victorias guardados en `localStorage`.
 - Interfaz responsive, optimizada primero para pantallas chicas.

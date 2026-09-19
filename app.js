@@ -302,7 +302,7 @@ const legacyMovies = [
 ].slice(0, 20);
 
 const movies = window.quizMovies || legacyMovies;
-const quizConfig = window.quizConfig || { videoUrl: '', videoQrImage: '' };
+const quizConfig = window.quizConfig || { videoQrImage: '' };
 
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
@@ -352,8 +352,8 @@ function renderQuiz() {
 }
 function renderResult() {
   const attemptLabel = state.attempts === 1 ? 'intento' : 'intentos';
-  const qrContent = quizConfig.videoUrl && quizConfig.videoQrImage
-    ? `<a class="qr-link" href="${esc(quizConfig.videoUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Abrir el video sorpresa"><img src="${esc(quizConfig.videoQrImage)}" alt="Código QR para abrir el video sorpresa"></a><p>Escaneá el QR para ver el video.</p>`
+  const qrContent = quizConfig.videoQrImage
+    ? `<div class="qr-image-frame"><img src="${esc(quizConfig.videoQrImage)}" alt="Código QR del video sorpresa"></div><p>Escanealo con otro celular para ver el video.</p>`
     : `<div class="qr-placeholder" aria-label="Código QR pendiente">QR</div><p>Acá va a aparecer el QR del video.</p>`;
   return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card"><p class="qr-title">El siguiente paso</p>${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Volvé al menú inicial</button></div></div></div></section>`;
 }
