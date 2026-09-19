@@ -131,6 +131,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .primary-button, .secondary-button { border-radius: 12px; padding: 13px 20px; cursor: pointer; font-weight: 700; font-size: .82rem; }
 .primary-button { border: 1px solid var(--yellow); color: var(--bg); background: var(--yellow); }
 .primary-button:hover { background: var(--yellow-soft); }
+.primary-button:disabled { background: var(--surface-3); border-color: var(--border); color: var(--muted); cursor: wait; }
+.primary-button:disabled:hover { background: var(--surface-3); }
 .secondary-button { border: 1px solid var(--border); color: var(--text); background: var(--surface); }
 .secondary-button:hover { border-color: var(--yellow); }
 .qr-card { width: min(100%, 360px); margin: 0 auto 28px; padding: 22px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); }
@@ -149,6 +151,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .loss-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: rgba(255,115,135,.12); color: var(--red); font-size: 1.6rem; margin-bottom: 20px; }
 .welcome-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: rgba(247,200,75,.13); color: var(--yellow); font-size: 1.6rem; margin-bottom: 20px; }
 .loss-actions { justify-content: flex-start; margin-top: 24px; }
+.cooldown-copy { padding: 12px 14px; border-radius: 12px; background: rgba(247,200,75,.07); border: 1px solid rgba(247,200,75,.18); }
+.cooldown-copy strong { color: var(--yellow); font-family: 'DM Mono', monospace; font-size: 1.05rem; }
 .rules { display: grid; gap: 14px; margin-top: 22px; }
 .rule { display: flex; gap: 13px; align-items: flex-start; color: var(--text); font-size: .83rem; line-height: 1.5; }
 .rule-icon { color: var(--yellow); font-size: 1rem; }
