@@ -118,6 +118,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .modal-close { position: absolute; right: 16px; top: 13px; background: transparent; border: 0; color: var(--muted); font-size: 1.6rem; cursor: pointer; line-height: 1; }
 .modal h2 { margin: 0 0 20px; letter-spacing: -.04em; }
 .modal p { color: var(--muted); line-height: 1.65; font-size: .9rem; }
+.loss-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: rgba(255,115,135,.12); color: var(--red); font-size: 1.6rem; margin-bottom: 20px; }
+.loss-actions { justify-content: flex-start; margin-top: 24px; }
 .rules { display: grid; gap: 14px; margin-top: 22px; }
 .rule { display: flex; gap: 13px; align-items: flex-start; color: var(--text); font-size: .83rem; line-height: 1.5; }
 .rule-icon { color: var(--yellow); font-size: 1rem; }

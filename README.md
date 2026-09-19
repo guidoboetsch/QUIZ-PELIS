@@ -14,9 +14,11 @@ Luego abrir <http://localhost:4173>.
 
 ## Incluye
 
-- 20 películas y 50 preguntas/variantes por película.
+- 20 películas elegidas a partir de las favoritas de los invitados.
+- 12 preguntas directas por película (240 preguntas en total).
 - Búsqueda y filtro por género.
 - Timer de 10 segundos por pregunta.
-- Reinicio de la racha al fallar o agotar el tiempo.
+- Reinicio de la racha al fallar.
+- Modal al agotar el tiempo para volver a intentarlo o rendirse.
 - Mejor racha, intentos y victorias guardados en `localStorage`.
 - Interfaz responsive, optimizada primero para pantallas chicas.

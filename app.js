@@ -1,4 +1,4 @@
-const movies = [
+const legacyMovies = [
   { id: 'matrix', title: 'The Matrix', year: 1999, genre: 'Ciencia ficción', color: 'linear-gradient(145deg,#103d3b,#0b181c 78%)', facts: [
     ['director','¿Quién dirigió The Matrix?','Lana y Lilly Wachowski',['Lana y Lilly Wachowski','Christopher Nolan','James Cameron','Ridley Scott']],
     ['protagonista','¿Qué personaje es interpretado por Keanu Reeves?','Neo',['Neo','Morpheus','Trinity','El Arquitecto']],
@@ -301,6 +301,8 @@ const movies = [
   ]}
 ].slice(0, 20);
 
+const movies = window.quizMovies || legacyMovies;
+
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
   timerId: null, answerLocked: false, category: 'Todas', search: '', stats: loadStats()
@@ -318,16 +320,12 @@ function getFilteredMovies() {
 }
 function shuffle(items) { return [...items].sort(() => Math.random() - .5); }
 function createQuestionPool(movie) {
-  const variants = [
-    fact => fact[2],
-    fact => `En ${movie.title}, ¿qué opción corresponde a “${fact[1].replace(/^¿|\?$/g, '')}”?`,
-    fact => `Dato de película: ¿cuál es la respuesta correcta sobre ${fact[0]}?`,
-    fact => `Si prestaste atención a ${movie.title}, ¿qué elegirías para ${fact[0]}?`,
-    fact => `¿Cuál de estas respuestas es parte del universo de ${movie.title}?`
-  ];
-  return movie.facts.flatMap((fact, factIndex) => variants.map((variant, variantIndex) => ({
-    id: `${movie.id}-${factIndex}-${variantIndex}`, text: variant === variants[0] ? fact[1] : variant(fact), answer: fact[2], options: shuffle(fact[3])
-  })));
+  return movie.facts.map((fact, factIndex) => ({
+    id: `${movie.id}-${factIndex}`,
+    text: fact[1],
+    answer: fact[2],
+    options: shuffle(fact[3])
+  }));
 }
 function render() {
   document.querySelector('#header-best').textContent = state.stats.best;
@@ -344,7 +342,7 @@ function renderHome() {
   </section>`;
 }
 function renderMovieCard(movie) {
-  return `<article class="movie-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Jugar ${esc(movie.title)}"><div class="poster" style="background:${movie.color}"><span class="poster-number">${String(movies.indexOf(movie) + 1).padStart(2, '0')}</span><span class="poster-title">${esc(movie.title)}</span></div><div class="movie-card-body"><div class="movie-meta"><span>${movie.year} · ${esc(movie.genre)}</span><span>50 Q</span></div></div></article>`;
+  return `<article class="movie-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Jugar ${esc(movie.title)}"><div class="poster" style="background:${movie.color}"><span class="poster-number">${String(movies.indexOf(movie) + 1).padStart(2, '0')}</span><span class="poster-title">${esc(movie.title)}</span></div><div class="movie-card-body"><div class="movie-meta"><span>${movie.year} · ${esc(movie.genre)}</span><span>${movie.facts.length} Q</span></div></div></article>`;
 }
 function renderQuiz() {
   const movie = state.selectedMovie, question = state.questions[state.questionIndex];
@@ -360,7 +358,38 @@ function startQuiz(movie) {
 }
 function startTimer() {
   clearInterval(state.timerId); state.timer = 10; const timerEl = document.querySelector('#timer'); if (timerEl) timerEl.textContent = `00:10`;
-  state.timerId = setInterval(() => { state.timer -= 1; const el = document.querySelector('#timer'); if (!el) return; el.textContent = `00:${String(state.timer).padStart(2, '0')}`; el.classList.toggle('urgent', state.timer <= 3); if (state.timer <= 0) failRound('Se terminó el tiempo.'); }, 1000);
+  state.timerId = setInterval(() => { state.timer -= 1; const el = document.querySelector('#timer'); if (!el) return; el.textContent = `00:${String(state.timer).padStart(2, '0')}`; el.classList.toggle('urgent', state.timer <= 3); if (state.timer <= 0) showLossModal(); }, 1000);
+}
+function showLossModal() {
+  if (state.answerLocked || state.screen !== 'quiz') return;
+  state.answerLocked = true;
+  clearInterval(state.timerId);
+  const backdrop = document.querySelector('#modal-backdrop');
+  const close = document.querySelector('.modal-close');
+  backdrop.dataset.mode = 'loss';
+  close.classList.add('hidden');
+  document.querySelector('#modal-content').innerHTML = `<div class="loss-icon">⌛</div><p class="eyebrow">Tiempo agotado</p><h2 id="modal-title">Perdiste, qué lástima.</h2><p>Se terminó el tiempo y la racha vuelve a cero. ¿Querés probar otra vez?</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round">Volvé a intentarlo</button><button class="secondary-button" id="give-up">Dejá, me rindo</button></div>`;
+  backdrop.classList.remove('hidden');
+  document.querySelector('#retry-round').addEventListener('click', () => {
+    backdrop.classList.add('hidden');
+    backdrop.dataset.mode = '';
+    close.classList.remove('hidden');
+    state.streak = 0;
+    state.attempts += 1;
+    state.questions = shuffle(createQuestionPool(state.selectedMovie));
+    state.questionIndex = 0;
+    state.answerLocked = false;
+    render();
+    startTimer();
+  });
+  document.querySelector('#give-up').addEventListener('click', () => {
+    backdrop.classList.add('hidden');
+    backdrop.dataset.mode = '';
+    close.classList.remove('hidden');
+    state.answerLocked = false;
+    state.screen = 'home';
+    render();
+  });
 }
 function failRound(reason) {
   if (state.screen !== 'quiz') return; state.answerLocked = true; clearInterval(state.timerId); const card = document.querySelector('#question-card'); if (card) card.classList.add('shake');
@@ -372,7 +401,7 @@ function answer(option, button) {
   else { button.classList.add('wrong'); all.forEach(btn => { if (btn.dataset.answer === question.answer) btn.classList.add('correct'); }); failRound('Respuesta incorrecta.'); }
 }
 function showToast(message) { const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message; document.body.appendChild(toast); requestAnimationFrame(() => toast.classList.add('visible')); setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 250); }, 2200); }
-function openHelp() { document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas disponibles.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Tenés 10 segundos para elegir cada respuesta.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás o se termina el tiempo, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">∞</span><span>Cada película tiene un banco de 50 preguntas para que los intentos no sean iguales.</span></div></div>`; document.querySelector('#modal-backdrop').classList.remove('hidden'); }
+function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elegí una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">⏱</span><span>Tenés 10 segundos para elegir cada respuesta.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si fallás, la racha vuelve a cero.</span></div><div class="rule"><span class="rule-icon">⌛</span><span>Si se termina el tiempo, podés volver a intentarlo o rendirte.</span></div></div>`; backdrop.classList.remove('hidden'); }
 function bindEvents() {
   document.querySelectorAll('[data-movie]').forEach(card => { const handler = () => startQuiz(movies.find(movie => movie.id === card.dataset.movie)); card.addEventListener('click', handler); card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handler(); } }); });
   document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => { state.category = button.dataset.category; render(); }));
@@ -384,6 +413,6 @@ function bindEvents() {
   document.querySelector('[data-action="open-help"]')?.addEventListener('click', openHelp);
 }
 document.querySelector('[data-action="open-help"]').addEventListener('click', openHelp);
-document.querySelector('[data-action="close-modal"]').addEventListener('click', () => document.querySelector('#modal-backdrop').classList.add('hidden'));
-document.querySelector('#modal-backdrop').addEventListener('click', event => { if (event.target.id === 'modal-backdrop') event.currentTarget.classList.add('hidden'); });
+document.querySelector('[data-action="close-modal"]').addEventListener('click', () => { const backdrop = document.querySelector('#modal-backdrop'); if (backdrop.dataset.mode !== 'loss') backdrop.classList.add('hidden'); });
+document.querySelector('#modal-backdrop').addEventListener('click', event => { if (event.target.id === 'modal-backdrop' && event.currentTarget.dataset.mode !== 'loss') event.currentTarget.classList.add('hidden'); });
 render();
