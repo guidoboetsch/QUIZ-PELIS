@@ -1,6 +1,6 @@
 # Quiz Pelis
 
-Quiz mobile-first de películas. Elegí una película, respondé 10 desafíos correctamente de forma consecutiva y desbloqueá la racha. Las preguntas tienen un límite de 10 segundos; un error o timeout reinicia la partida.
+Quiz mobile-first de películas. Elegí una película, respondé 10 desafíos correctamente de forma consecutiva y desbloqueá la racha. Las preguntas 1 a 8 tienen 10 segundos y la 9 tiene 15; un error o timeout reinicia la partida.
 
 ## Ejecutar
 
@@ -20,7 +20,10 @@ Luego abrir <http://localhost:4173>.
 - Búsqueda y filtro por género.
 - Timer de 10 segundos para las preguntas 1 a 8.
 - Pregunta 9 de nivel difícil con 15 segundos.
-- Pregunta 10 en formato memo-test: nueve cartas temáticas se muestran durante 15 segundos y después hay que tocarlas del 1 al 9, ya ocultas y sin límite de tiempo. Un error reinicia todo el quiz.
+- Pregunta 10 en formato memo-test: nueve íconos temáticos se muestran durante 15 segundos y después el juego solicita cada ícono para que el jugador recuerde su posición, sin límite de tiempo. Un error reinicia todo el quiz.
+- Bienvenida antes de la primera partida de cada sesión.
+- Memo-test sin números: el juego solicita un ícono por vez y hay que recordar su posición.
+- Cartel de derrota tanto por tiempo agotado como por respuesta o ícono incorrecto.
 - Reinicio de la racha al fallar.
 - Modal al agotar el tiempo para volver a intentarlo o rendirse.
 - Pantalla final con la respuesta del acertijo, cantidad de intentos y un QR no clickeable para abrir un video desde otro celular.

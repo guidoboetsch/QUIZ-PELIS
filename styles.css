@@ -94,8 +94,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .answer.wrong { background: rgba(255,115,135,.12); border-color: var(--red); }
 .answer.wrong .answer-letter { color: var(--red); border-color: var(--red); }
 .answer:disabled { cursor: default; }
-.timer-row { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--muted); margin-top: 28px; font-size: .75rem; }
-.timer { color: var(--yellow); font-family: 'DM Mono', monospace; font-size: 1rem; min-width: 28px; }
+.timer-row { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--muted); margin-top: 28px; font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; }
+.timer { min-width: 132px; padding: 10px 16px; border: 1px solid rgba(247,200,75,.35); border-radius: 14px; background: rgba(247,200,75,.07); color: var(--yellow); font-family: 'DM Mono', monospace; font-size: clamp(2rem, 8vw, 3.25rem); font-weight: 500; line-height: 1; letter-spacing: -.06em; text-align: center; }
 .timer.urgent { color: var(--red); animation: pulse .65s infinite alternate; }
 @keyframes pulse { to { transform: scale(1.15); } }
 
@@ -106,12 +106,12 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .memo-tile { position: relative; aspect-ratio: 1; min-width: 0; border: 1px solid var(--border); border-radius: 15px; background: var(--surface-2); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; overflow: hidden; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
 .memo-tile:not(:disabled):hover { border-color: var(--yellow); transform: translateY(-2px); background: var(--surface-3); }
 .memo-tile:disabled { cursor: default; opacity: 1; }
-.memo-order { position: absolute; top: 7px; left: 8px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 7px; background: var(--yellow); color: var(--bg); font: 700 .68rem 'DM Mono', monospace; }
 .memo-symbol { font-size: clamp(1.7rem, 7vw, 2.7rem); line-height: 1; }
 .memo-label { color: var(--muted); font-size: clamp(.55rem, 2.3vw, .72rem); max-width: 90%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .memo-cover { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid rgba(247,200,75,.38); border-radius: 14px; color: var(--yellow); font: 500 1.45rem 'DM Mono', monospace; background: rgba(247,200,75,.06); }
 .memo-tile.solved { border-color: var(--green); background: rgba(120,223,170,.1); }
-.memo-tile.solved .memo-order { background: var(--green); }
+.memo-target { width: fit-content; min-width: 150px; margin: 12px auto 18px; padding: 11px 18px; display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(247,200,75,.42); border-radius: 14px; background: rgba(247,200,75,.08); color: var(--text); font-size: .85rem; font-weight: 700; }
+.memo-target-symbol { font-size: 2.1rem; line-height: 1; }
 
 .result-screen { max-width: 980px; text-align: center; padding-top: 42px; }
 .result-layout { display: grid; grid-template-columns: minmax(0,1fr) 350px; align-items: center; gap: clamp(30px, 7vw, 80px); }
@@ -147,6 +147,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .modal h2 { margin: 0 0 20px; letter-spacing: -.04em; }
 .modal p { color: var(--muted); line-height: 1.65; font-size: .9rem; }
 .loss-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: rgba(255,115,135,.12); color: var(--red); font-size: 1.6rem; margin-bottom: 20px; }
+.welcome-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: rgba(247,200,75,.13); color: var(--yellow); font-size: 1.6rem; margin-bottom: 20px; }
 .loss-actions { justify-content: flex-start; margin-top: 24px; }
 .rules { display: grid; gap: 14px; margin-top: 22px; }
 .rule { display: flex; gap: 13px; align-items: flex-start; color: var(--text); font-size: .83rem; line-height: 1.5; }
