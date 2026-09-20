@@ -123,6 +123,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .primary-button:disabled:hover { background: var(--surface-3); }
 .secondary-button { border: 1px solid rgba(255,255,255,.35); color: var(--text); background: #111; }
 .secondary-button:hover { border-color: var(--yellow); }
+.secondary-button:disabled { border-color: var(--border); color: #6f6b65; background: #151514; cursor: wait; opacity: .65; }
+.secondary-button:disabled:hover { border-color: var(--border); }
 .qr-card { width: min(100%, 360px); margin: 0 auto 28px; padding: 22px; border-radius: 2px; background: var(--surface); border: 1px solid var(--border); box-shadow: 7px 7px 0 rgba(237,28,36,.14); }
 .qr-title { margin: 0 0 15px; color: var(--text); font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; }
 .qr-card > p:last-child { color: var(--muted); font-size: .76rem; margin: 12px 0 0; }
@@ -140,7 +142,11 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 .modal-close { position: absolute; right: 16px; top: 13px; background: transparent; border: 0; color: var(--muted); font-size: 1.6rem; cursor: pointer; line-height: 1; }
 .modal h2 { font-family: 'Bodoni Moda', Georgia, serif; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 600; line-height: 1.02; margin: 0 0 20px; letter-spacing: -.045em; }
 .modal p { color: #b8b4ad; line-height: 1.55; font-size: .86rem; }
-.loss-icon { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 50%; background: transparent; border: 1px solid var(--red); color: var(--red); font-size: 1.5rem; margin-bottom: 18px; box-shadow: 4px 4px 0 rgba(237,28,36,.16); }
+.loss-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.loss-heading > div:first-child { min-width: 0; }
+.loss-heading .eyebrow { margin-bottom: 10px; }
+.loss-heading h2 { margin-bottom: 0; }
+.loss-icon { width: 54px; height: 54px; flex: 0 0 54px; display: grid; place-items: center; border-radius: 50%; background: transparent; border: 1px solid var(--red); color: var(--red); font-size: 1.5rem; margin-top: 2px; box-shadow: 4px 4px 0 rgba(237,28,36,.16); }
 .loss-actions { justify-content: flex-start; margin-top: 24px; }
 .welcome-actions { justify-content: center; margin-top: 24px; }
 .cooldown-copy { padding: 12px 14px; border-radius: 2px; background: rgba(237,28,36,.08); border: 1px dashed rgba(237,28,36,.6); }

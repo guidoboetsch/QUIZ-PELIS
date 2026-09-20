@@ -540,7 +540,7 @@ function showLossModal() {
     startTimer();
     return;
   }
-  openLossModal('Tiempo agotado', '¡Uy! Se terminó el tiempo. ¿Quieren probar otra vez?', '😔');
+  openLossModal('Tiempo agotado', '¡Se durmieron! Se les terminó el tiempo.', '😔');
 }
 function openLossModal(eyebrow, message, icon = '×') {
   state.answerLocked = true;
@@ -553,9 +553,10 @@ function openLossModal(eyebrow, message, icon = '×') {
   const close = document.querySelector('.modal-close');
   backdrop.dataset.mode = 'loss';
   close.classList.add('hidden');
-  document.querySelector('#modal-content').innerHTML = `<div class="loss-icon">${icon}</div><p class="eyebrow">${esc(eyebrow)}</p><h2 id="modal-title">Perdieron, qué lástima.</h2><p>${esc(message)}</p><p class="cooldown-copy" id="cooldown-copy">Respiren un poco: pueden volver a jugar en <strong id="cooldown-seconds">${cooldown}</strong> segundos.</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round" disabled>Vuelvan a intentarlo · ${cooldown} s</button><button class="secondary-button" id="choose-another">Elegir otra película</button></div>`;
+  document.querySelector('#modal-content').innerHTML = `<div class="loss-heading"><div><p class="eyebrow">${esc(eyebrow)}</p><h2 id="modal-title">Perdieron, qué lástima.</h2></div><div class="loss-icon">${icon}</div></div><p>${esc(message)}</p><p class="cooldown-copy" id="cooldown-copy">Respiren un poco: pueden volver a jugar en <strong id="cooldown-seconds">${cooldown}</strong> segundos.</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round" disabled>Vuelvan a intentarlo · ${cooldown} s</button><button class="secondary-button" id="choose-another" disabled>Elegir otra película</button></div>`;
   backdrop.classList.remove('hidden');
   const retryButton = document.querySelector('#retry-round');
+  const chooseAnotherButton = document.querySelector('#choose-another');
   const cooldownSeconds = document.querySelector('#cooldown-seconds');
   state.cooldownId = setInterval(() => {
     cooldown -= 1;
@@ -569,6 +570,7 @@ function openLossModal(eyebrow, message, icon = '×') {
     document.querySelector('#cooldown-copy').textContent = '¡Listo! Ya pueden volver a intentarlo.';
     retryButton.textContent = 'Vuelvan a intentarlo';
     retryButton.disabled = false;
+    chooseAnotherButton.disabled = false;
   }, 1000);
   retryButton.addEventListener('click', () => {
     clearInterval(state.cooldownId);
@@ -584,7 +586,7 @@ function openLossModal(eyebrow, message, icon = '×') {
     render();
     startTimer();
   });
-  document.querySelector('#choose-another').addEventListener('click', () => {
+  chooseAnotherButton.addEventListener('click', () => {
     clearInterval(state.cooldownId);
     state.cooldownId = null;
     state.lossCount = 0;
@@ -598,12 +600,12 @@ function openLossModal(eyebrow, message, icon = '×') {
 }
 function failRound(reason) {
   if (state.screen !== 'quiz') return; state.answerLocked = true; clearInterval(state.timerId); const card = document.querySelector('#question-card'); if (card) card.classList.add('shake');
-  setTimeout(() => openLossModal('Respuesta incorrecta', `¡Uy! ${reason}`, '😔'), 450);
+  setTimeout(() => openLossModal('Respuesta incorrecta', reason, '😔'), 450);
 }
 function answer(option, button) {
   if (state.answerLocked) return; state.answerLocked = true; clearInterval(state.timerId); const question = state.questions[state.questionIndex]; const all = document.querySelectorAll('.answer'); all.forEach(btn => btn.disabled = true);
   if (option === question.answer) { button.classList.add('correct'); state.streak += 1; if (state.streak > state.stats.best) { state.stats.best = state.streak; saveStats(); } if (state.streak === 10) { setTimeout(() => { state.screen = 'result'; state.stats.wins += 1; saveStats(); render(); }, 450); return; } setTimeout(() => { state.questionIndex += 1; state.answerLocked = false; render(); startTimer(); }, 400); }
-  else { button.classList.add('wrong'); all.forEach(btn => { if (btn.dataset.answer === question.answer) btn.classList.add('correct'); }); failRound('Esa no era la respuesta correcta.'); }
+  else { button.classList.add('wrong'); all.forEach(btn => { if (btn.dataset.answer === question.answer) btn.classList.add('correct'); }); failRound('¡Ah, tiraron cualquiera!'); }
 }
 function chooseMemoTile(order) {
   if (state.answerLocked) return;
@@ -613,7 +615,7 @@ function chooseMemoTile(order) {
   const targetOrder = question.sequence[question.next];
   const target = question.items.find(item => item.order === targetOrder);
   if (chosenOrder !== targetOrder) {
-    failRound(`Ese no era el ícono ${target.label}.`);
+    failRound(`¡Ah, tiraron cualquiera! Ese no era el ícono ${target.label}.`);
     return;
   }
   question.solved.push(chosenOrder);
