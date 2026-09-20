@@ -453,8 +453,7 @@ function renderHome() {
   </section>`;
 }
 function renderMovieCard(movie) {
-  const number = String(movies.indexOf(movie) + 1).padStart(2, '0');
-  return `<article class="movie-card poster-only-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Elegir póster ${number}"><div class="poster" style="background:${movie.color}"><img class="poster-image" src="assets/posters/${movie.id}.jpg" alt="" loading="lazy"><span class="poster-number">${number}</span><span class="poster-choice">Elegir</span></div></article>`;
+  return `<article class="movie-card poster-only-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Elegir una película"><div class="poster" style="background:${movie.color}"><img class="poster-image" src="assets/posters/${movie.id}.jpg" alt="" loading="lazy"></div></article>`;
 }
 function renderQuiz() {
   const movie = state.selectedMovie, question = state.questions[state.questionIndex];
