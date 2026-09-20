@@ -71,10 +71,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 @keyframes shake { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
 .question-kicker { color: var(--muted); font-family: 'DM Mono', monospace; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; }
 .question-text { font-family: 'Oswald', Impact, sans-serif; font-size: clamp(1.55rem, 4vw, 2.5rem); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; margin: 18px 0 34px; max-width: 670px; }
-.question-heading-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 22px; margin-bottom: 30px; }
-.question-heading-row .question-text { margin-bottom: 0; }
-.timer-row-top { align-items: flex-end; margin-top: 0; gap: 6px; }
-.timer-row-top .timer { min-width: 112px; font-size: clamp(1.7rem, 4vw, 2.4rem); }
 .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .answer { text-align: left; border: 1px solid rgba(255,255,255,.2); color: var(--text); border-radius: 2px; background: #181817; padding: 17px 16px; cursor: pointer; min-height: 59px; transition: background .15s ease, transform .15s ease, border-color .15s ease; display: flex; gap: 12px; align-items: center; }
 .answer:hover { border-color: var(--yellow); transform: translateY(-2px); background: var(--surface-3); }
@@ -181,18 +177,14 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
   .quiz-top { flex: 0 0 auto; min-height: 20px; margin-bottom: 7px; }
   .question-progress { flex: 0 0 auto; margin-bottom: 7px; }
   .question-card { min-height: 0; padding: 14px; border-radius: 3px; }
-  .quiz-screen:not(.memo-screen) .question-card { flex: 0 1 auto; display: flex; flex-direction: column; overflow: hidden; }
+  .quiz-screen:not(.memo-screen) .question-card { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .question-kicker { font-size: .58rem; }
   .question-text { flex: 0 0 auto; font-size: clamp(1.05rem, 5vw, 1.35rem); line-height: 1.12; margin: 8px 0 12px; }
-  .question-heading-row { gap: 12px; margin-bottom: 12px; }
-  .question-heading-row .question-text { margin-bottom: 0; }
-  .answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(54px, auto)); gap: 8px; flex: 0 0 auto; min-height: 0; }
-  .answer { padding: 11px 13px; min-height: 54px; font-size: 1rem; font-weight: 600; line-height: 1.25; }
-  .answer-letter { width: 29px; height: 29px; font-size: .8rem; }
+  .answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(58px, 1fr)); gap: 8px; flex: 1; min-height: 0; }
+  .answer { padding: 12px 14px; min-height: 58px; font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
+  .answer-letter { width: 30px; height: 30px; font-size: .82rem; }
   .timer-row { flex: 0 0 auto; flex-direction: row; gap: 10px; margin-top: 10px; font-size: .58rem; }
   .timer { min-width: 100px; padding: 7px 11px; border-radius: 2px; font-size: clamp(1.55rem, 8vw, 2rem); }
-  .timer-row-top { flex-direction: column; align-items: flex-end; gap: 5px; margin-top: 0; }
-  .timer-row-top .timer { min-width: 92px; padding: 7px 9px; font-size: clamp(1.45rem, 7vw, 1.8rem); }
   .memo-screen { padding: 8px 10px 10px; }
   .memo-screen .quiz-top, .memo-screen .question-progress { display: none; }
   .memo-card { flex: 0 0 auto; display: flex; flex-direction: column; min-height: 0; padding: 12px; overflow: hidden; }
