@@ -178,18 +178,51 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
   .poster-title { font-size: 1.1rem; }
   .movie-card-body { padding: 10px 11px 12px; }
   .movie-meta { font-size: .59rem; }
-  .quiz-screen { padding-top: 22px; }
-  .question-card { padding: 25px 18px; border-radius: 17px; }
-  .answers { grid-template-columns: 1fr; }
-  .answer { padding: 14px; min-height: 53px; }
-  .question-text { margin-bottom: 25px; }
-  .memo-card { padding: 22px 15px; }
-  .memo-grid { gap: 7px; }
-  .memo-tile { border-radius: 12px; }
-  .memo-copy { font-size: .75rem; margin-bottom: 16px; }
+  body.quiz-active { overflow: hidden; }
+  body.quiz-active .app-shell { height: 100dvh; min-height: 100dvh; }
+  body.quiz-active #app { min-height: 0; }
+  body.quiz-active .footer { display: none; }
+  .quiz-screen { height: calc(100dvh - 64px); padding: 8px 14px 10px; display: flex; flex-direction: column; overflow: hidden; }
+  .quiz-top { flex: 0 0 auto; min-height: 20px; margin-bottom: 7px; }
+  .question-progress { flex: 0 0 auto; margin-bottom: 7px; }
+  .question-card { min-height: 0; padding: 14px; border-radius: 17px; }
+  .quiz-screen:not(.memo-screen) .question-card { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .question-kicker { font-size: .58rem; }
+  .question-text { flex: 0 0 auto; font-size: clamp(1.05rem, 5vw, 1.35rem); line-height: 1.12; margin: 8px 0 12px; }
+  .answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(44px, 1fr)); gap: 7px; flex: 1; min-height: 0; }
+  .answer { padding: 9px 11px; min-height: 44px; font-size: .82rem; }
+  .answer-letter { width: 22px; height: 22px; font-size: .68rem; }
+  .timer-row { flex: 0 0 auto; flex-direction: row; gap: 10px; margin-top: 10px; font-size: .58rem; }
+  .timer { min-width: 100px; padding: 7px 11px; border-radius: 11px; font-size: clamp(1.55rem, 8vw, 2rem); }
+  .memo-screen { padding: 8px 10px 10px; }
+  .memo-screen .quiz-top, .memo-screen .question-progress { display: none; }
+  .memo-card { flex: 0 0 auto; display: flex; flex-direction: column; min-height: 0; padding: 12px; overflow: hidden; }
+  .memo-card .question-kicker { display: none; }
+  .memo-title { margin: 0 0 4px; font-size: clamp(1rem, 5.2vw, 1.28rem); line-height: 1.08; }
+  .memo-copy { flex: 0 0 auto; font-size: .64rem; line-height: 1.3; margin: 0 0 7px; }
+  .memo-grid { flex: 0 0 auto; min-height: 0; aspect-ratio: 3 / 4; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 5px; }
+  .memo-tile { min-height: 0; aspect-ratio: auto; border-radius: 10px; gap: 3px; }
+  .memo-symbol { font-size: clamp(1.3rem, 7vw, 1.8rem); }
+  .memo-label { display: -webkit-box; max-width: 94%; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: normal; text-overflow: ellipsis; font-size: clamp(.46rem, 2.1vw, .58rem); line-height: 1.05; text-align: center; }
+  .memo-cover { width: 34px; height: 34px; border-radius: 10px; font-size: 1rem; }
+  .memo-target { flex: 0 0 auto; min-width: 126px; margin: 3px auto 6px; padding: 6px 11px; border-radius: 10px; font-size: .7rem; }
+  .memo-target-symbol { font-size: 1.45rem; }
+  .memo-card .timer-row { min-height: 42px; margin-top: 7px; }
   .result-screen { padding-top: 38px; }
   .result-layout { grid-template-columns: 1fr; gap: 10px; }
   .result-side { width: 100%; }
   .footer { padding-bottom: 24px; }
+}
+@media (max-width: 700px) and (max-height: 690px) {
+  .memo-grid { aspect-ratio: 4 / 3; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) and (max-height: 620px) {
+  .topbar { height: 56px; }
+  .brand-mark { width: 28px; height: 28px; border-radius: 8px; font-size: 1.05rem; }
+  .quiz-screen { height: calc(100dvh - 56px); padding-top: 6px; padding-bottom: 7px; }
+  .memo-screen { padding-top: 6px; padding-bottom: 7px; }
+  .memo-card { padding: 9px; }
+  .memo-copy { font-size: .58rem; margin-bottom: 5px; }
+  .memo-card .timer-row { min-height: 36px; margin-top: 5px; }
 }
 @media (max-width: 390px) { .movie-meta span:first-child { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }

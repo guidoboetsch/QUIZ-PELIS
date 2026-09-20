@@ -446,6 +446,7 @@ function buildRoundQuestions(movie) {
   return [...easy, ...intermediate, hard, memory];
 }
 function render() {
+  document.body.classList.toggle('quiz-active', state.screen === 'quiz');
   document.querySelector('#header-best').textContent = state.stats.best;
   document.querySelector('#app').innerHTML = state.screen === 'home' ? renderHome() : state.screen === 'quiz' ? renderQuiz() : renderResult();
   bindEvents();
@@ -483,7 +484,7 @@ function renderMemoQuiz(movie, question, progress) {
   const timerMarkup = isPreview
     ? `<div class="timer-row"><span>Tiempo para memorizar</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div>`
     : '<div class="timer-row memo-no-limit"><span>Sin límite de tiempo</span><span class="timer">∞</span></div>';
-  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1>${targetMarkup}<p class="memo-copy">${isPreview ? 'Tienen 15 segundos. Después las cartas se dan vuelta y el juego les pedirá los íconos uno por uno.' : 'Toquen la posición donde estaba el ícono indicado. No hay reloj, pero un error reinicia todo el quiz.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div>${timerMarkup}</div></section>`;
+  return `<section class="screen quiz-screen memo-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">10 / 10</span></div><div class="question-card memo-card ${isPreview ? 'memo-preview' : 'memo-recall'}" id="question-card"><span class="question-kicker">Pregunta 10 · memo-test</span><h1 class="question-text memo-title">${instruction}</h1>${targetMarkup}<p class="memo-copy">${isPreview ? 'Tienen 15 segundos. Después las cartas se dan vuelta y el juego les pedirá los íconos uno por uno.' : 'Toquen la posición donde estaba el ícono indicado. No hay reloj, pero un error reinicia todo el quiz.'}</p><div class="memo-grid">${question.items.map(item => renderMemoTile(item, question)).join('')}</div>${timerMarkup}</div></section>`;
 }
 function renderMemoTile(item, question) {
   const isPreview = question.phase === 'preview';
