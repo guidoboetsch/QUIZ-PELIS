@@ -519,7 +519,7 @@ function showWelcomeModal() {
   const close = document.querySelector('.modal-close');
   backdrop.dataset.mode = 'welcome';
   close.classList.add('hidden');
-  document.querySelector('#modal-content').innerHTML = `<div class="welcome-icon">✦</div><p class="eyebrow">Todo listo</p><h2 id="modal-title">Respondan las 10 preguntas y ganen el acertijo.</h2><p>Tienen un tiempo límite por pregunta, así que presten atención al contador.</p><div class="button-row loss-actions"><button class="primary-button" id="start-round">Empezar</button></div>`;
+  document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Respondan las 10 preguntas y ganen el acertijo.</h2><p>Tienen un tiempo límite por pregunta, así que presten atención al contador.</p><div class="button-row welcome-actions"><button class="primary-button" id="start-round">Empezar</button></div>`;
   backdrop.classList.remove('hidden');
   document.querySelector('#start-round').addEventListener('click', () => {
     backdrop.classList.add('hidden');
