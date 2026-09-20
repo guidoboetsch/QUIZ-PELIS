@@ -17,7 +17,6 @@ Luego abrir <http://localhost:4173>.
 - 20 películas elegidas a partir de la lista definitiva.
 - Selección visual mediante 20 pósters locales, sin mostrar títulos, años ni géneros en las tarjetas.
 - Banco por película con 6 preguntas fáciles, 6 intermedias (una siempre sobre el estreno), una difícil fija y el memo-test final.
-- Búsqueda y filtro por género.
 - Preguntas 1 a 6 de nivel fácil y preguntas 7 y 8 de nivel intermedio, todas con 10 segundos.
 - Pregunta 9 de nivel difícil con 15 segundos.
 - Pregunta 10 en formato memo-test: doce íconos temáticos se muestran durante 15 segundos y después el juego solicita cada ícono para que el jugador recuerde su posición, sin límite de tiempo. Un error reinicia todo el quiz.

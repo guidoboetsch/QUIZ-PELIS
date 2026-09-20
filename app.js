@@ -375,7 +375,7 @@ const releaseTitlesByMovie = {
 
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
-  timerId: null, cooldownId: null, lossCount: 0, intermediateQueue: [], answerLocked: false, welcomeShown: false, category: 'Todas', search: '', stats: loadStats()
+  timerId: null, cooldownId: null, lossCount: 0, intermediateQueue: [], answerLocked: false, welcomeShown: false, stats: loadStats()
 };
 
 function loadStats() {
@@ -384,10 +384,6 @@ function loadStats() {
 }
 function saveStats() { localStorage.setItem('quiz-pelis-stats', JSON.stringify(state.stats)); }
 function esc(value) { return String(value).replace(/[&<>'"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;' }[c])); }
-function categories() { return ['Todas', ...new Set(movies.map(movie => movie.genre))]; }
-function getFilteredMovies() {
-  return movies.filter(movie => (state.category === 'Todas' || movie.genre === state.category) && movie.title.toLowerCase().includes(state.search.toLowerCase()));
-}
 function shuffle(items) { return [...items].sort(() => Math.random() - .5); }
 function createQuestionPool(movie) {
   return movie.facts.map((fact, factIndex) => ({
@@ -447,17 +443,13 @@ function buildRoundQuestions(movie) {
 }
 function render() {
   document.body.classList.toggle('quiz-active', state.screen === 'quiz');
-  document.querySelector('#header-best').textContent = state.stats.best;
   document.querySelector('#app').innerHTML = state.screen === 'home' ? renderHome() : state.screen === 'quiz' ? renderQuiz() : renderResult();
   bindEvents();
 }
 function renderHome() {
-  const filtered = getFilteredMovies();
   return `<section class="screen home-screen">
-    <div class="hero"><div><p class="eyebrow">Su próxima obsesión cinéfila</p><h1>¿Cuánto saben<br>de <em>películas?</em></h1><p class="hero-copy">Elijan una película, respondan 10 preguntas seguidas y demuestren que no son espectadores casuales.</p></div><div class="hero-note"><strong>10 segundos</strong>Una respuesta incorrecta o un segundo de más y vuelven a empezar.</div></div>
-    <div class="toolbar"><div class="search-wrap"><span>⌕</span><input class="search-input" id="search" type="search" placeholder="Buscar película..." value="${esc(state.search)}" aria-label="Buscar película"></div><div class="filter-pills">${categories().map(category => `<button class="pill ${state.category === category ? 'active' : ''}" data-category="${esc(category)}">${esc(category)}</button>`).join('')}</div></div>
-    <p class="results-label">${filtered.length} PELÍCULAS PARA ELEGIR</p>
-    <div class="movies-grid">${filtered.length ? filtered.map(renderMovieCard).join('') : '<div class="empty-state">No encontramos esa película. Prueben con otro título.</div>'}</div>
+    <div class="hero"><div><h1><span class="hero-title-line">¿Cuánto saben</span><span class="hero-title-line">de <em>películas?</em></span></h1><p class="hero-copy">Elijan una película y respondan correctamente 10 preguntas seguidas para ganar el acertijo. Cada pregunta tiene tiempo límite; si fallan, vuelven a empezar.</p></div></div>
+    <div class="movies-grid">${movies.map(renderMovieCard).join('')}</div>
   </section>`;
 }
 function renderMovieCard(movie) {
@@ -639,19 +631,14 @@ function chooseMemoTile(order) {
   render();
 }
 function showToast(message) { const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message; document.body.appendChild(toast); requestAnimationFrame(() => toast.classList.add('visible')); setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 250); }, 2200); }
-function openHelp() { const backdrop = document.querySelector('#modal-backdrop'); backdrop.dataset.mode = 'help'; document.querySelector('.modal-close').classList.remove('hidden'); document.querySelector('#modal-content').innerHTML = `<h2 id="modal-title">Cómo jugar</h2><p>El objetivo es completar una racha de 10 respuestas correctas sobre la misma película.</p><div class="rules"><div class="rule"><span class="rule-icon">✦</span><span>Elijan una de las 20 películas elegidas por los invitados.</span></div><div class="rule"><span class="rule-icon">◌</span><span>Las preguntas 1 a 6 son fáciles y tienen 10 segundos.</span></div><div class="rule"><span class="rule-icon">◐</span><span>Las preguntas 7 y 8 son intermedias y tienen 10 segundos.</span></div><div class="rule"><span class="rule-icon">◆</span><span>La pregunta 9 es la más difícil y tiene 15 segundos.</span></div><div class="rule"><span class="rule-icon">▦</span><span>En la 10 ven nueve íconos durante 15 segundos. Después el juego pide cada ícono y deben recordar dónde estaba, ya sin límite de tiempo.</span></div><div class="rule"><span class="rule-icon">↻</span><span>Si pierden, deben esperar 5, 10, 20, 30 y luego 60 segundos para reintentar. Cambiar de película reinicia la espera.</span></div></div>`; backdrop.classList.remove('hidden'); }
 function bindEvents() {
   document.querySelectorAll('[data-movie]').forEach(card => { const handler = () => startQuiz(movies.find(movie => movie.id === card.dataset.movie)); card.addEventListener('click', handler); card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handler(); } }); });
-  document.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => { state.category = button.dataset.category; render(); }));
-  document.querySelector('#search')?.addEventListener('input', event => { state.search = event.target.value; const position = event.target.selectionStart; render(); const input = document.querySelector('#search'); input.focus(); input.setSelectionRange(position, position); });
   document.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', () => answer(button.dataset.answer, button)));
   document.querySelectorAll('[data-memo-order]').forEach(button => button.addEventListener('click', () => chooseMemoTile(button.dataset.memoOrder)));
   document.querySelectorAll('[data-action="go-home"]').forEach(button => button.addEventListener('click', () => { clearInterval(state.timerId); clearInterval(state.cooldownId); state.cooldownId = null; state.screen = 'home'; render(); }));
   document.querySelector('[data-action="quit-quiz"]')?.addEventListener('click', () => { clearInterval(state.timerId); clearInterval(state.cooldownId); state.cooldownId = null; state.screen = 'home'; render(); });
   document.querySelector('[data-action="play-again"]')?.addEventListener('click', () => startQuiz(state.selectedMovie));
-  document.querySelector('[data-action="open-help"]')?.addEventListener('click', openHelp);
 }
-document.querySelector('[data-action="open-help"]').addEventListener('click', openHelp);
 document.querySelector('[data-action="close-modal"]').addEventListener('click', () => { const backdrop = document.querySelector('#modal-backdrop'); if (!['loss', 'welcome'].includes(backdrop.dataset.mode)) backdrop.classList.add('hidden'); });
 document.querySelector('#modal-backdrop').addEventListener('click', event => { if (event.target.id === 'modal-backdrop' && !['loss', 'welcome'].includes(event.currentTarget.dataset.mode)) event.currentTarget.classList.add('hidden'); });
 render();
