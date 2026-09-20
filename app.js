@@ -539,9 +539,9 @@ function showLossModal() {
     startTimer();
     return;
   }
-  openLossModal('Tiempo agotado', '¡Se durmieron! Se les terminó el tiempo.', '😔');
+  openLossModal('Tiempo agotado', 'Se durmieron, se les terminó el tiempo.', '😔');
 }
-function openLossModal(eyebrow, message, icon = '×') {
+function openLossModal(eyebrow, headline, icon = '×') {
   state.answerLocked = true;
   clearInterval(state.timerId);
   clearInterval(state.cooldownId);
@@ -552,7 +552,7 @@ function openLossModal(eyebrow, message, icon = '×') {
   const close = document.querySelector('.modal-close');
   backdrop.dataset.mode = 'loss';
   close.classList.add('hidden');
-  document.querySelector('#modal-content').innerHTML = `<div class="loss-heading"><div><p class="eyebrow">${esc(eyebrow)}</p><h2 id="modal-title">Perdieron, qué lástima.</h2></div><div class="loss-icon">${icon}</div></div><p>${esc(message)}</p><p class="cooldown-copy" id="cooldown-copy">Respiren un poco: pueden volver a jugar en <strong id="cooldown-seconds">${cooldown}</strong> segundos.</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round" disabled>Volver a intentarlo · ${cooldown} s</button><button class="secondary-button" id="choose-another" disabled>Elegir otra película</button></div>`;
+  document.querySelector('#modal-content').innerHTML = `<div class="loss-heading"><div><p class="eyebrow">${esc(eyebrow)}</p><h2 id="modal-title">${esc(headline)}</h2></div><div class="loss-icon">${icon}</div></div><p class="cooldown-copy" id="cooldown-copy">Respiren un poco: pueden volver a jugar en <strong id="cooldown-seconds">${cooldown}</strong> segundos.</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round" disabled>Volver a intentarlo · ${cooldown} s</button><button class="secondary-button" id="choose-another" disabled>Elegir otra película</button></div>`;
   backdrop.classList.remove('hidden');
   const retryButton = document.querySelector('#retry-round');
   const chooseAnotherButton = document.querySelector('#choose-another');
@@ -597,14 +597,21 @@ function openLossModal(eyebrow, message, icon = '×') {
     render();
   });
 }
-function failRound(reason) {
+function wrongAnswerFeedback(question) {
+  if (question?.kind === 'memo') return { eyebrow: 'Memo-test fallido', headline: 'Necesitan sumar más cabezas al equipo para este memo-test.' };
+  if (question?.kind === 'hard') return { eyebrow: 'Pregunta difícil', headline: 'Era difícil, sí… pero igual tiraron cualquiera.' };
+  if (question?.difficulty === 'intermediate') return { eyebrow: 'Pregunta intermedia', headline: 'Ahí ya había que saber un poquito más.' };
+  return { eyebrow: 'Pregunta fácil', headline: '¡Era una de las fáciles! Arrancaron flojitos.' };
+}
+function failRound() {
   if (state.screen !== 'quiz') return; state.answerLocked = true; clearInterval(state.timerId); const card = document.querySelector('#question-card'); if (card) card.classList.add('shake');
-  setTimeout(() => openLossModal('Respuesta incorrecta', reason, '😔'), 450);
+  const feedback = wrongAnswerFeedback(state.questions[state.questionIndex]);
+  setTimeout(() => openLossModal(feedback.eyebrow, feedback.headline, '😔'), 450);
 }
 function answer(option, button) {
   if (state.answerLocked) return; state.answerLocked = true; clearInterval(state.timerId); const question = state.questions[state.questionIndex]; const all = document.querySelectorAll('.answer'); all.forEach(btn => btn.disabled = true);
   if (option === question.answer) { button.classList.add('correct'); state.streak += 1; if (state.streak > state.stats.best) { state.stats.best = state.streak; saveStats(); } if (state.streak === 10) { setTimeout(() => { state.screen = 'result'; state.stats.wins += 1; saveStats(); render(); }, 450); return; } setTimeout(() => { state.questionIndex += 1; state.answerLocked = false; render(); startTimer(); }, 400); }
-  else { button.classList.add('wrong'); all.forEach(btn => { if (btn.dataset.answer === question.answer) btn.classList.add('correct'); }); failRound('¡Ah, tiraron cualquiera!'); }
+  else { button.classList.add('wrong'); all.forEach(btn => { if (btn.dataset.answer === question.answer) btn.classList.add('correct'); }); failRound(); }
 }
 function chooseMemoTile(order) {
   if (state.answerLocked) return;
@@ -614,7 +621,7 @@ function chooseMemoTile(order) {
   const targetOrder = question.sequence[question.next];
   const target = question.items.find(item => item.order === targetOrder);
   if (chosenOrder !== targetOrder) {
-    failRound(`¡Ah, tiraron cualquiera! Ese no era el ícono ${target.label}.`);
+    failRound();
     return;
   }
   question.solved.push(chosenOrder);
