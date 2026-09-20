@@ -280,3 +280,88 @@ window.quizMovies = [
     ['pais','¿De qué país es la película?','Argentina',['Argentina','España','Uruguay','México']]
   ]}
 ];
+
+const quizMovieAdditions = [
+  { id: 'lalaland', title: 'La La Land', year: 2016, genre: 'Musical', color: 'linear-gradient(145deg,#5b3982,#171225 78%)', hardFact: ['difícil','¿Qué melodía toca Sebastian en el restaurante cuando lo despiden?','Mia & Sebastian’s Theme',['Mia & Sebastian’s Theme','City of Stars','Another Day of Sun','Someone in the Crowd']], facts: [
+    ['mia','¿Cómo se llama la protagonista que sueña con ser actriz?','Mia',['Mia','Emma','Laura','Sophie']],
+    ['sebastian','¿Cómo se llama el pianista de jazz?','Sebastian',['Sebastian','Keith','Greg','Bill']],
+    ['actriz','¿Quién interpreta a Mia?','Emma Stone',['Emma Stone','Anne Hathaway','Margot Robbie','Amy Adams']],
+    ['actor','¿Quién interpreta a Sebastian?','Ryan Gosling',['Ryan Gosling','Bradley Cooper','Andrew Garfield','Jake Gyllenhaal']],
+    ['ciudad','¿En qué ciudad transcurre la historia?','Los Ángeles',['Los Ángeles','Nueva York','Chicago','San Francisco']],
+    ['instrumento','¿Qué instrumento toca Sebastian?','Piano',['Piano','Saxofón','Guitarra','Trompeta']],
+    ['audicion','¿Qué canción interpreta Mia en su audición final?','The Fools Who Dream',['The Fools Who Dream','City of Stars','Audition Day','Start a Fire']],
+    ['club','¿Cómo se llama el club que abre Sebastian?','Seb’s',['Seb’s','Mia’s','Blue Note','La La Jazz']],
+    ['compositor','¿Quién compuso la música original?','Justin Hurwitz',['Justin Hurwitz','John Legend','Damien Chazelle','Hans Zimmer']],
+    ['observatorio','¿En qué observatorio bailan entre las estrellas?','Griffith Observatory',['Griffith Observatory','Palomar Observatory','Hollywood Bowl','Getty Center']],
+    ['estacion','¿Qué estación aparece en el epílogo final?','Invierno',['Invierno','Primavera','Verano','Otoño']]
+  ]},
+  { id: 'prettywoman', title: 'Mujer Bonita', year: 1990, genre: 'Romance', color: 'linear-gradient(145deg,#a33b65,#25101b 78%)', hardFact: ['difícil','¿Cómo se llama el gerente del hotel que ayuda a Vivian?','Barney Thompson',['Barney Thompson','Philip Stuckey','James Morse','David Walker']], facts: [
+    ['vivian','¿Quién interpreta a Vivian Ward?','Julia Roberts',['Julia Roberts','Sandra Bullock','Meg Ryan','Demi Moore']],
+    ['edward','¿Quién interpreta a Edward Lewis?','Richard Gere',['Richard Gere','Hugh Grant','Tom Hanks','Kevin Costner']],
+    ['ciudad','¿En qué ciudad se conocen Vivian y Edward?','Los Ángeles',['Los Ángeles','Nueva York','Miami','Las Vegas']],
+    ['hotel','¿En qué hotel se aloja Edward?','Beverly Wilshire',['Beverly Wilshire','Chateau Marmont','Beverly Hills Hotel','Ritz-Carlton']],
+    ['auto','¿Qué auto conduce Edward cuando conoce a Vivian?','Lotus Esprit',['Lotus Esprit','Ferrari Testarossa','Porsche 911','Mercedes SL']],
+    ['vestido','¿De qué color es el vestido de gala de Vivian?','Rojo',['Rojo','Negro','Blanco','Azul']],
+    ['amiga','¿Cómo se llama la mejor amiga de Vivian?','Kit De Luca',['Kit De Luca','Laura San Giacomo','Rachel','Susan']],
+    ['calle','¿En qué avenida hace compras Vivian?','Rodeo Drive',['Rodeo Drive','Sunset Boulevard','Hollywood Boulevard','Melrose Avenue']],
+    ['opera','¿Qué ópera van a ver?','La traviata',['La traviata','Carmen','Aida','La bohème']],
+    ['joya','¿Qué joya le presta Edward para la ópera?','Un collar',['Un collar','Una tiara','Un brazalete','Un broche']],
+    ['negocio','¿A qué se dedica Edward?','Compra empresas para venderlas por partes',['Compra empresas para venderlas por partes','Dirige un hotel','Es abogado','Diseña autos']]
+  ]},
+  { id: 'fast', title: 'Rápidos y Furiosos', year: 2001, genre: 'Acción', color: 'linear-gradient(145deg,#434b57,#11151b 78%)', hardFact: ['difícil','¿Qué modelo verde conduce Brian en la primera película?','Mitsubishi Eclipse',['Mitsubishi Eclipse','Toyota Supra','Nissan Skyline','Honda S2000']], facts: [
+    ['dom','¿Quién interpreta a Dominic Toretto?','Vin Diesel',['Vin Diesel','Paul Walker','Dwayne Johnson','Jason Statham']],
+    ['brian','¿Quién interpreta a Brian O’Conner?','Paul Walker',['Paul Walker','Vin Diesel','Tyrese Gibson','Sung Kang']],
+    ['letty','¿Cómo se llama la pareja de Dom?','Letty',['Letty','Mia','Gisele','Elena']],
+    ['tema','¿Qué palabra resume el vínculo central del equipo?','Familia',['Familia','Dinero','Fama','Venganza']],
+    ['actividad','¿Qué tipo de competencias aparecen en toda la saga?','Carreras de autos',['Carreras de autos','Carreras de motos','Combates de boxeo','Regatas']],
+    ['auto-dom','¿Qué muscle car está especialmente asociado con Dom?','Dodge Charger',['Dodge Charger','Ford Mustang','Chevrolet Camaro','Pontiac GTO']],
+    ['hobbs','¿Quién interpreta a Luke Hobbs?','Dwayne Johnson',['Dwayne Johnson','Jason Statham','John Cena','Kurt Russell']],
+    ['tokio','¿En qué ciudad transcurre Tokyo Drift?','Tokio',['Tokio','Osaka','Seúl','Hong Kong']],
+    ['han','¿Quién interpreta a Han?','Sung Kang',['Sung Kang','Justin Lin','Rick Yune','Brian Tee']],
+    ['cipher','¿Quién interpreta a Cipher?','Charlize Theron',['Charlize Theron','Gal Gadot','Michelle Rodriguez','Nathalie Emmanuel']],
+    ['tej','¿Quién interpreta a Tej Parker?','Ludacris',['Ludacris','Tyrese Gibson','Bow Wow','Ja Rule']]
+  ]},
+  { id: 'highschoolmusical', title: 'High School Musical', year: 2006, genre: 'Musical', color: 'linear-gradient(145deg,#b33d34,#281113 78%)', hardFact: ['difícil','¿Cómo se llama el musical escolar para el que audicionan?','Twinkle Towne',['Twinkle Towne','Breaking Free','East High Nights','Winter Musical']], facts: [
+    ['troy','¿Quién interpreta a Troy Bolton?','Zac Efron',['Zac Efron','Corbin Bleu','Lucas Grabeel','Drew Seeley']],
+    ['gabriella','¿Quién interpreta a Gabriella Montez?','Vanessa Hudgens',['Vanessa Hudgens','Ashley Tisdale','Monique Coleman','Selena Gomez']],
+    ['escuela','¿Cómo se llama la escuela?','East High',['East High','West High','Wildcat Academy','Albuquerque High']],
+    ['deporte','¿Qué deporte juega Troy?','Básquet',['Básquet','Fútbol americano','Béisbol','Vóley']],
+    ['equipo','¿Cómo se llama el equipo de la escuela?','Wildcats',['Wildcats','Tigers','Eagles','Falcons']],
+    ['sharpay','¿Quién quiere protagonizar siempre los musicales?','Sharpay',['Sharpay','Gabriella','Taylor','Kelsi']],
+    ['ryan','¿Cómo se llama el hermano de Sharpay?','Ryan',['Ryan','Chad','Zeke','Jason']],
+    ['cafeteria','¿Qué canción cantan en la cafetería?','Stick to the Status Quo',['Stick to the Status Quo','Breaking Free','Get’cha Head in the Game','What I’ve Been Looking For']],
+    ['karaoke','¿Qué canción une por primera vez a Troy y Gabriella?','Start of Something New',['Start of Something New','Breaking Free','We’re All in This Together','Bop to the Top']],
+    ['camiseta','¿Qué número usa Troy en su camiseta?','14',['14','10','7','23']],
+    ['profesora','¿Cómo se llama la profesora de teatro?','Señora Darbus',['Señora Darbus','Señora Evans','Señora Bolton','Señora Montez']]
+  ]},
+  { id: 'parenttrap', title: 'Juego de Gemelas', year: 1998, genre: 'Comedia', color: 'linear-gradient(145deg,#2f7291,#101c24 78%)', hardFact: ['difícil','¿Qué juego disputan Hallie y Annie en la cabaña de aislamiento?','Póker',['Póker','Ajedrez','Monopoly','Scrabble']], facts: [
+    ['gemelas','¿Cómo se llaman las gemelas?','Hallie y Annie',['Hallie y Annie','Mia y Anna','Sophie y Chloe','Emma y Lily']],
+    ['actriz','¿Quién interpreta a las dos gemelas?','Lindsay Lohan',['Lindsay Lohan','Hilary Duff','Amanda Bynes','Mara Wilson']],
+    ['campamento','¿Cómo se llama el campamento donde se conocen?','Camp Walden',['Camp Walden','Camp Rock','Camp Pine','Camp California']],
+    ['padre','¿Cómo se llama el padre?','Nick Parker',['Nick Parker','Martin James','Charles Blake','Sam Parker']],
+    ['madre','¿Cómo se llama la madre?','Elizabeth James',['Elizabeth James','Meredith Blake','Chessy Parker','Victoria James']],
+    ['intercambio','¿Qué hacen las gemelas para conocer al otro progenitor?','Intercambian lugares',['Intercambian lugares','Envían cartas','Escapan juntas','Llaman por teléfono']],
+    ['mayordomo','¿Cómo se llama el mayordomo de Elizabeth?','Martin',['Martin','Charles','James','Simon']],
+    ['ama-casa','¿Cómo se llama el ama de llaves de Nick?','Chessy',['Chessy','Meredith','Vicki','Hallie']],
+    ['prometida','¿Cómo se llama la prometida de Nick?','Meredith Blake',['Meredith Blake','Elizabeth James','Elaine Hendrix','Marva Kulp']],
+    ['broma','¿Qué animal colocan sobre Meredith durante el campamento?','Una lagartija',['Una lagartija','Una araña','Una rana','Una serpiente']],
+    ['profesion','¿A qué se dedica Elizabeth?','Diseñadora de vestidos de novia',['Diseñadora de vestidos de novia','Fotógrafa','Periodista','Abogada']]
+  ]},
+  { id: 'up', title: 'Up', year: 2009, genre: 'Animación', color: 'linear-gradient(145deg,#59a8d8,#17324b 78%)', hardFact: ['difícil','¿Cómo se llama el dirigible de Charles Muntz?','Spirit of Adventure',['Spirit of Adventure','Paradise','Explorer','Ellie']], facts: [
+    ['carl','¿Cómo se llama el anciano protagonista?','Carl Fredricksen',['Carl Fredricksen','Charles Muntz','Russell Fredricksen','George Fredricksen']],
+    ['russell','¿Cómo se llama el niño explorador que acompaña a Carl?','Russell',['Russell','Kevin','Dug','Muntz']],
+    ['globos','¿Con qué hace volar Carl su casa?','Con miles de globos',['Con miles de globos','Con una hélice','Con un dirigible','Con cohetes']],
+    ['perro','¿Cómo se llama el perro que se hace amigo de Carl y Russell?','Dug',['Dug','Alpha','Beta','Gamma']],
+    ['ave','¿Qué nombre le pone Russell al ave gigante?','Kevin',['Kevin','Ellie','Paradise','Snipe']],
+    ['destino','¿A qué lugar quiere llevar Carl su casa?','Cataratas del Paraíso',['Cataratas del Paraíso','Gran Cañón','Cataratas del Niágara','Monte Everest']],
+    ['ellie','¿Cómo se llama la esposa de Carl?','Ellie',['Ellie','Mary','Jane','Helen']],
+    ['explorador','¿Quién era el explorador admirado por Carl y Ellie?','Charles Muntz',['Charles Muntz','Russell','Alpha','George Fredricksen']],
+    ['collar','¿Qué permiten hacer los collares de los perros?','Traducir sus pensamientos en voz',['Traducir sus pensamientos en voz','Hacerlos volar','Volverlos invisibles','Controlar el clima']],
+    ['insignia','¿A qué grupo pertenece Russell?','Exploradores de la Naturaleza',['Exploradores de la Naturaleza','Guardianes del Bosque','Aventureros del Sur','Club de Aviadores']],
+    ['estudio','¿Qué estudio produjo la película?','Pixar',['Pixar','DreamWorks','Blue Sky','Laika']]
+  ]}
+];
+
+const quizMovieCatalog = [...window.quizMovies, ...quizMovieAdditions];
+const quizMovieOrder = ['titanic','harrypotter','lalaland','prettywoman','killbill','shrek','up','lotr','interstellar','shining','matrix','terminator2','godfather','fast','highschoolmusical','jurassic','forrest','backfuture','parenttrap','nuevereinas'];
+window.quizMovies = quizMovieOrder.map(id => quizMovieCatalog.find(movie => movie.id === id));

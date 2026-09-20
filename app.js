@@ -327,9 +327,55 @@ const memoItemsByMovie = {
   nuevereinas: [['📬','Estampillas'],['💼','Valija'],['🏨','Hotel'],['💵','Dólares'],['📰','Diario'],['✍️','Firma'],['🏦','Banco'],['🧾','Cheque'],['👓','Lentes']]
 };
 
+const memoExtraItemsByMovie = {
+  titanic: [['🛟','Salvavidas'],['🧳','Equipaje'],['⚓','Ancla']],
+  harrypotter: [['🐍','Serpiente'],['🧪','Poción'],['🕯️','Vela']],
+  lalaland: [['🎹','Piano'],['🎬','Claqueta'],['🌃','Ciudad'],['⭐','Estrella'],['☕','Café'],['🎭','Audición'],['💃','Baile'],['🎷','Jazz'],['🚗','Auto'],['🌌','Observatorio'],['👗','Vestido'],['🎤','Micrófono']],
+  prettywoman: [['👗','Vestido'],['💎','Collar'],['🛍️','Compras'],['🏨','Hotel'],['🚗','Auto'],['🌹','Rosa'],['🎭','Ópera'],['💵','Dinero'],['🐎','Polo'],['🛁','Baño'],['👠','Zapato'],['🥂','Champaña']],
+  killbill: [['👣','Pasos'],['⛩️','Templo'],['🎶','Silbido']],
+  shrek: [['🧚','Hada'],['🍪','Galleta'],['🌙','Luna']],
+  up: [['🎈','Globos'],['🏠','Casa'],['👴','Carl'],['👦','Russell'],['🐕','Dug'],['🐦','Kevin'],['🗺️','Mapa'],['🏞️','Cataratas'],['🛩️','Dirigible'],['🎖️','Insignia'],['📖','Libro de aventuras'],['🦯','Bastón']],
+  lotr: [['👹','Orco'],['🏹','Arco'],['🌲','Bosque']],
+  interstellar: [['🛰️','Estación'],['🧭','Coordenadas'],['🛏️','Sueño']],
+  shining: [['🏔️','Montaña'],['🗝️','Llave'],['📺','Televisor']],
+  matrix: [['💾','Disco'],['🪞','Espejo'],['🧥','Abrigo']],
+  terminator2: [['🦾','Brazo'],['🏭','Fábrica'],['🚔','Policía']],
+  godfather: [['🎩','Sombrero'],['🕴️','Don'],['📰','Diario']],
+  fast: [['🚗','Auto'],['🏁','Carrera'],['🔧','Motor'],['⛽','Combustible'],['💨','Nitro'],['👨‍👩‍👧','Familia'],['🚓','Policía'],['🏎️','Deportivo'],['🔥','Fuego'],['🔩','Tornillo'],['🛣️','Ruta'],['💵','Dinero']],
+  highschoolmusical: [['🏀','Básquet'],['🎤','Micrófono'],['🎭','Teatro'],['🏫','Escuela'],['🎼','Partitura'],['🐾','Wildcat'],['👑','Sharpay'],['📚','Libros'],['🎹','Piano'],['🎉','Fiesta'],['⛷️','Esquí'],['🧢','Gorra']],
+  jurassic: [['🐐','Cabra'],['🚁','Helicóptero'],['🟠','Ámbar']],
+  forrest: [['🚤','Barco'],['🇺🇸','Bandera'],['🎸','Elvis']],
+  backfuture: [['👟','Zapatillas'],['🌩️','Tormenta'],['📅','Calendario']],
+  parenttrap: [['👯','Gemelas'],['⛺','Campamento'],['🃏','Póker'],['🦎','Lagartija'],['🍇','Viñedo'],['✈️','Avión'],['🇬🇧','Londres'],['🇺🇸','California'],['💍','Anillo'],['🐕','Perro'],['🧳','Valija'],['🏡','Casa']],
+  nuevereinas: [['☕','Café'],['🛗','Ascensor'],['🧤','Guantes']]
+};
+
+const releaseTitlesByMovie = {
+  titanic: 'Titanic',
+  harrypotter: 'Harry Potter y la piedra filosofal, la primera película de la saga',
+  lalaland: 'La La Land',
+  prettywoman: 'Mujer Bonita',
+  killbill: 'Kill Bill: Volumen 1',
+  shrek: 'Shrek, la primera película de la saga',
+  up: 'Up',
+  lotr: 'El Señor de los Anillos: La Comunidad del Anillo',
+  interstellar: 'Interestelar',
+  shining: 'El resplandor',
+  matrix: 'The Matrix',
+  terminator2: 'Terminator 2',
+  godfather: 'El Padrino, la primera película de la saga',
+  fast: 'Rápidos y Furiosos 1, la primera película de la saga',
+  highschoolmusical: 'High School Musical, la primera película',
+  jurassic: 'Jurassic Park, la primera película de la saga',
+  forrest: 'Forrest Gump',
+  backfuture: 'Volver al Futuro, la primera película de la saga',
+  parenttrap: 'Juego de Gemelas',
+  nuevereinas: 'Nueve Reinas'
+};
+
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
-  timerId: null, cooldownId: null, lossCount: 0, answerLocked: false, welcomeShown: false, category: 'Todas', search: '', stats: loadStats()
+  timerId: null, cooldownId: null, lossCount: 0, intermediateQueue: [], answerLocked: false, welcomeShown: false, category: 'Todas', search: '', stats: loadStats()
 };
 
 function loadStats() {
@@ -350,13 +396,34 @@ function createQuestionPool(movie) {
     answer: fact[2],
     options: shuffle(fact[3]),
     kind: 'normal',
-    difficulty: factIndex < 6 ? 'easy' : 'intermediate'
+    difficulty: factIndex < 6 ? 'easy' : 'intermediate',
+    topic: fact[0]
   }));
+}
+function createReleaseQuestion(movie) {
+  const year = Number(movie.year);
+  return {
+    id: `${movie.id}-release`,
+    text: `¿En qué año se estrenó ${releaseTitlesByMovie[movie.id]}?`,
+    answer: String(year),
+    options: shuffle([year, year - 3, year + 2, year + 5].map(String)),
+    kind: 'normal',
+    difficulty: 'intermediate',
+    topic: 'estreno'
+  };
+}
+function takeIntermediateVariant(variants) {
+  const validIds = new Set(variants.map(question => question.id));
+  state.intermediateQueue = state.intermediateQueue.filter(id => validIds.has(id));
+  if (!state.intermediateQueue.length) state.intermediateQueue = shuffle(variants.map(question => question.id));
+  const nextId = state.intermediateQueue.shift();
+  return variants.find(question => question.id === nextId);
 }
 function buildRoundQuestions(movie) {
   const pool = createQuestionPool(movie);
   const easy = shuffle(pool.filter(question => question.difficulty === 'easy')).slice(0, 6);
-  const intermediate = shuffle(pool.filter(question => question.difficulty === 'intermediate')).slice(0, 2);
+  const intermediateVariants = pool.filter(question => question.difficulty === 'intermediate').slice(0, 5);
+  const intermediate = shuffle([createReleaseQuestion(movie), takeIntermediateVariant(intermediateVariants)]);
   const hardFact = movie.hardFact;
   const hard = {
     id: `${movie.id}-hard`,
@@ -365,14 +432,16 @@ function buildRoundQuestions(movie) {
     options: shuffle(hardFact[3]),
     kind: 'hard'
   };
+  const memoSource = [...(memoItemsByMovie[movie.id] || []), ...(memoExtraItemsByMovie[movie.id] || [])].slice(0, 12);
+  const memoCards = memoSource.map((item, index) => ({ symbol: item[0], label: item[1], order: index + 1 }));
   const memory = {
     id: `${movie.id}-memo`,
     kind: 'memo',
     phase: 'preview',
     next: 0,
     solved: [],
-    sequence: shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-    items: shuffle((memoItemsByMovie[movie.id] || memoItemsByMovie.matrix).map((item, index) => ({ symbol: item[0], label: item[1], order: index + 1 })))
+    sequence: shuffle(memoCards.map(item => item.order)),
+    items: shuffle(memoCards)
   };
   return [...easy, ...intermediate, hard, memory];
 }
@@ -432,7 +501,7 @@ function renderResult() {
   return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card"><p class="qr-title">El siguiente paso</p>${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Vuelvan al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
-  clearInterval(state.timerId); clearInterval(state.cooldownId); state.cooldownId = null; state.lossCount = 0; state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render();
+  clearInterval(state.timerId); clearInterval(state.cooldownId); state.cooldownId = null; state.lossCount = 0; state.intermediateQueue = []; state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render();
   if (!state.welcomeShown) { state.welcomeShown = true; showWelcomeModal(); }
   else startTimer();
 }

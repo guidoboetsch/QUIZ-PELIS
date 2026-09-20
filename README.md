@@ -14,15 +14,15 @@ Luego abrir <http://localhost:4173>.
 
 ## Incluye
 
-- 20 películas elegidas a partir de las favoritas de los invitados.
+- 20 películas elegidas a partir de la lista definitiva.
 - Selección visual mediante 20 pósters locales, sin mostrar títulos, años ni géneros en las tarjetas.
-- 12 preguntas directas por película (240 preguntas en total).
+- Banco por película con 6 preguntas fáciles, 6 intermedias (una siempre sobre el estreno), una difícil fija y el memo-test final.
 - Búsqueda y filtro por género.
 - Preguntas 1 a 6 de nivel fácil y preguntas 7 y 8 de nivel intermedio, todas con 10 segundos.
 - Pregunta 9 de nivel difícil con 15 segundos.
-- Pregunta 10 en formato memo-test: nueve íconos temáticos se muestran durante 15 segundos y después el juego solicita cada ícono para que el jugador recuerde su posición, sin límite de tiempo. Un error reinicia todo el quiz.
+- Pregunta 10 en formato memo-test: doce íconos temáticos se muestran durante 15 segundos y después el juego solicita cada ícono para que el jugador recuerde su posición, sin límite de tiempo. Un error reinicia todo el quiz.
 - Bienvenida antes de la primera partida de cada sesión.
-- Memo-test sin números: el juego solicita un ícono por vez y hay que recordar su posición.
+- Memo-test sin números: el juego solicita uno de los 12 íconos por vez y hay que recordar su posición.
 - Cartel de derrota tanto por tiempo agotado como por respuesta o ícono incorrecto.
 - Espera progresiva por película después de cada derrota: 5, 10, 20, 30 y luego 60 segundos como máximo.
 - Reinicio de la racha al fallar.
