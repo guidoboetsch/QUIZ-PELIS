@@ -465,7 +465,7 @@ function renderQuiz() {
     : question.difficulty === 'intermediate'
       ? `Pregunta ${state.streak + 1} · nivel intermedio`
       : `Pregunta ${state.streak + 1} · nivel fácil`;
-  return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card" id="question-card"><span class="question-kicker">${kicker}</span><h1 class="question-text">${esc(question.text)}</h1><div class="answers">${question.options.map((option, index) => `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`).join('')}</div><div class="timer-row"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+  return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card" id="question-card"><div class="question-heading-row"><div><span class="question-kicker">${kicker}</span><h1 class="question-text">${esc(question.text)}</h1></div><div class="timer-row timer-row-top"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div><div class="answers">${question.options.map((option, index) => `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`).join('')}</div></div></section>`;
 }
 function renderMemoQuiz(movie, question, progress) {
   const isPreview = question.phase === 'preview';
@@ -553,7 +553,7 @@ function openLossModal(eyebrow, message, icon = '×') {
   const close = document.querySelector('.modal-close');
   backdrop.dataset.mode = 'loss';
   close.classList.add('hidden');
-  document.querySelector('#modal-content').innerHTML = `<div class="loss-heading"><div><p class="eyebrow">${esc(eyebrow)}</p><h2 id="modal-title">Perdieron, qué lástima.</h2></div><div class="loss-icon">${icon}</div></div><p>${esc(message)}</p><p class="cooldown-copy" id="cooldown-copy">Respiren un poco: pueden volver a jugar en <strong id="cooldown-seconds">${cooldown}</strong> segundos.</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round" disabled>Vuelvan a intentarlo · ${cooldown} s</button><button class="secondary-button" id="choose-another" disabled>Elegir otra película</button></div>`;
+  document.querySelector('#modal-content').innerHTML = `<div class="loss-heading"><div><p class="eyebrow">${esc(eyebrow)}</p><h2 id="modal-title">Perdieron, qué lástima.</h2></div><div class="loss-icon">${icon}</div></div><p>${esc(message)}</p><p class="cooldown-copy" id="cooldown-copy">Respiren un poco: pueden volver a jugar en <strong id="cooldown-seconds">${cooldown}</strong> segundos.</p><div class="button-row loss-actions"><button class="primary-button" id="retry-round" disabled>Volver a intentarlo · ${cooldown} s</button><button class="secondary-button" id="choose-another" disabled>Elegir otra película</button></div>`;
   backdrop.classList.remove('hidden');
   const retryButton = document.querySelector('#retry-round');
   const chooseAnotherButton = document.querySelector('#choose-another');
@@ -562,13 +562,13 @@ function openLossModal(eyebrow, message, icon = '×') {
     cooldown -= 1;
     if (cooldown > 0) {
       cooldownSeconds.textContent = cooldown;
-      retryButton.textContent = `Vuelvan a intentarlo · ${cooldown} s`;
+      retryButton.textContent = `Volver a intentarlo · ${cooldown} s`;
       return;
     }
     clearInterval(state.cooldownId);
     state.cooldownId = null;
     document.querySelector('#cooldown-copy').textContent = '¡Listo! Ya pueden volver a intentarlo.';
-    retryButton.textContent = 'Vuelvan a intentarlo';
+    retryButton.textContent = 'Volver a intentarlo';
     retryButton.disabled = false;
     chooseAnotherButton.disabled = false;
   }, 1000);
