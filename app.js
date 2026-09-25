@@ -528,9 +528,9 @@ function renderMemoTile(item, question) {
 function renderResult() {
   const attemptLabel = state.attempts === 1 ? 'intento' : 'intentos';
   const qrContent = quizConfig.videoQrImage
-    ? `<div class="qr-image-frame"><img src="${esc(quizConfig.videoQrImage)}" alt="Código QR del video sorpresa"></div><p>Escaneen el QR con otro celular para ver el video.</p>`
-    : `<div class="qr-placeholder" aria-label="Código QR pendiente">QR</div><p>Acá va a aparecer el QR del video.</p>`;
-  return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card"><p class="qr-title">El siguiente paso</p>${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Vuelvan al menú inicial</button></div></div></div></section>`;
+    ? `<div class="qr-image-frame"><img src="${esc(quizConfig.videoQrImage)}" alt="Código QR del video sorpresa"></div>`
+    : `<div class="qr-placeholder" aria-label="Código QR pendiente">QR</div>`;
+  return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card">${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Vuelvan al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
   clearInterval(state.timerId); clearInterval(state.cooldownId); state.cooldownId = null; state.lossCount = 0; state.intermediateQueue = []; state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render();
