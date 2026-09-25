@@ -373,6 +373,29 @@ const releaseTitlesByMovie = {
   nuevereinas: 'Nueve Reinas'
 };
 
+const runtimeByMovie = {
+  titanic: { title: 'Titanic', minutes: 195 },
+  harrypotter: { title: 'Harry Potter y la piedra filosofal', minutes: 152 },
+  lalaland: { title: 'La La Land', minutes: 128 },
+  prettywoman: { title: 'Mujer Bonita', minutes: 119 },
+  killbill: { title: 'Kill Bill: Volumen 1', minutes: 110 },
+  shrek: { title: 'Shrek', minutes: 90 },
+  up: { title: 'Up', minutes: 96 },
+  lotr: { title: 'El Señor de los Anillos: La Comunidad del Anillo', minutes: 178 },
+  interstellar: { title: 'Interestelar', minutes: 169 },
+  shining: { title: 'El resplandor (versión estadounidense)', minutes: 144 },
+  matrix: { title: 'The Matrix', minutes: 136 },
+  terminator2: { title: 'Terminator 2 (versión cinematográfica)', minutes: 137 },
+  godfather: { title: 'El Padrino', minutes: 175 },
+  fast: { title: 'Rápidos y Furiosos 1', minutes: 107 },
+  highschoolmusical: { title: 'High School Musical', minutes: 98 },
+  jurassic: { title: 'Jurassic Park', minutes: 127 },
+  forrest: { title: 'Forrest Gump', minutes: 142 },
+  backfuture: { title: 'Volver al Futuro', minutes: 116 },
+  parenttrap: { title: 'Juego de Gemelas', minutes: 128 },
+  nuevereinas: { title: 'Nueve Reinas', minutes: 114 }
+};
+
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
   timerId: null, cooldownId: null, lossCount: 0, intermediateQueue: [], answerLocked: false, welcomeShown: false, stats: loadStats()
@@ -408,17 +431,34 @@ function createReleaseQuestion(movie) {
     topic: 'estreno'
   };
 }
+function createRuntimeQuestion(movie) {
+  const runtime = runtimeByMovie[movie.id];
+  const minutes = runtime.minutes;
+  return {
+    id: `${movie.id}-runtime`,
+    text: `¿Cuántos minutos dura ${runtime.title}?`,
+    answer: `${minutes} minutos`,
+    options: shuffle([minutes, minutes - 9, minutes + 7, minutes + 14].map(value => `${value} minutos`)),
+    kind: 'normal',
+    difficulty: 'intermediate',
+    topic: 'duración'
+  };
+}
 function takeIntermediateVariant(variants) {
   const validIds = new Set(variants.map(question => question.id));
   state.intermediateQueue = state.intermediateQueue.filter(id => validIds.has(id));
-  if (!state.intermediateQueue.length) state.intermediateQueue = shuffle(variants.map(question => question.id));
+  if (!state.intermediateQueue.length) {
+    const runtime = variants.find(question => question.topic === 'duración');
+    const others = shuffle(variants.filter(question => question !== runtime).map(question => question.id));
+    state.intermediateQueue = runtime ? [runtime.id, ...others] : others;
+  }
   const nextId = state.intermediateQueue.shift();
   return variants.find(question => question.id === nextId);
 }
 function buildRoundQuestions(movie) {
   const pool = createQuestionPool(movie);
   const easy = shuffle(pool.filter(question => question.difficulty === 'easy')).slice(0, 6);
-  const intermediateVariants = pool.filter(question => question.difficulty === 'intermediate').slice(0, 5);
+  const intermediateVariants = [createRuntimeQuestion(movie), ...pool.filter(question => question.difficulty === 'intermediate').slice(0, 4)];
   const intermediate = shuffle([createReleaseQuestion(movie), takeIntermediateVariant(intermediateVariants)]);
   const hardFact = movie.hardFact;
   const hard = {
