@@ -396,6 +396,29 @@ const runtimeByMovie = {
   nuevereinas: { title: 'Nueve Reinas', minutes: 114 }
 };
 
+const visualObjectLabels = {
+  titanic: 'Barco transatlántico',
+  harrypotter: 'Varita mágica',
+  lalaland: 'Piano',
+  prettywoman: 'Vestido rojo',
+  killbill: 'Katana',
+  shrek: 'Cebolla',
+  up: 'Globos',
+  lotr: 'Anillo dorado',
+  interstellar: 'Reloj',
+  shining: 'Hacha',
+  matrix: 'Pastilla roja',
+  terminator2: 'Anteojos negros',
+  godfather: 'Naranjas',
+  fast: 'Botella de nitro',
+  highschoolmusical: 'Pelota de básquet',
+  jurassic: 'Ámbar con mosquito',
+  forrest: 'Pluma blanca',
+  backfuture: 'Auto con puertas de ala de gaviota',
+  parenttrap: 'Baúl de campamento',
+  nuevereinas: 'Plancha de estampillas'
+};
+
 const state = {
   screen: 'home', selectedMovie: null, questions: [], questionIndex: 0, streak: 0, attempts: 0, timer: 10,
   timerId: null, cooldownId: null, lossCount: 0, intermediateQueue: [], answerLocked: false, welcomeShown: false, stats: loadStats()
@@ -408,6 +431,12 @@ function loadStats() {
 function saveStats() { localStorage.setItem('quiz-pelis-stats', JSON.stringify(state.stats)); }
 function esc(value) { return String(value).replace(/[&<>'"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;' }[c])); }
 function shuffle(items) { return [...items].sort(() => Math.random() - .5); }
+function preloadVisualObjects() {
+  Object.keys(visualObjectLabels).forEach(movieId => {
+    const image = new Image();
+    image.src = `assets/objects/${movieId}.webp`;
+  });
+}
 function createQuestionPool(movie) {
   return movie.facts.map((fact, factIndex) => ({
     id: `${movie.id}-${factIndex}`,
@@ -444,6 +473,18 @@ function createRuntimeQuestion(movie) {
     topic: 'duración'
   };
 }
+function createVisualQuestion(movie) {
+  const distractors = shuffle(Object.keys(visualObjectLabels).filter(movieId => movieId !== movie.id)).slice(0, 5);
+  return {
+    id: `${movie.id}-visual`,
+    text: '¿Cuál de estos objetos está relacionado con esta película?',
+    answer: movie.id,
+    options: shuffle([movie.id, ...distractors]),
+    kind: 'visual',
+    difficulty: 'intermediate',
+    topic: 'objeto visual'
+  };
+}
 function takeIntermediateVariant(variants) {
   const validIds = new Set(variants.map(question => question.id));
   state.intermediateQueue = state.intermediateQueue.filter(id => validIds.has(id));
@@ -457,9 +498,9 @@ function takeIntermediateVariant(variants) {
 }
 function buildRoundQuestions(movie) {
   const pool = createQuestionPool(movie);
-  const easy = shuffle(pool.filter(question => question.difficulty === 'easy')).slice(0, 6);
+  const easy = shuffle(pool.filter(question => question.difficulty === 'easy')).slice(0, 5);
   const intermediateVariants = [createRuntimeQuestion(movie), ...pool.filter(question => question.difficulty === 'intermediate').slice(0, 4)];
-  const intermediate = shuffle([createReleaseQuestion(movie), takeIntermediateVariant(intermediateVariants)]);
+  const intermediate = shuffle([createReleaseQuestion(movie), takeIntermediateVariant(intermediateVariants), createVisualQuestion(movie)]);
   const hardFact = movie.hardFact;
   const hard = {
     id: `${movie.id}-hard`,
@@ -495,6 +536,13 @@ function renderHome() {
 function renderMovieCard(movie) {
   return `<article class="movie-card poster-only-card" data-movie="${movie.id}" tabindex="0" role="button" aria-label="Elegir una película"><div class="poster" style="background:${movie.color}"><img class="poster-image" src="assets/posters/${movie.id}.jpg" alt="" loading="lazy"></div></article>`;
 }
+function renderAnswer(question, option, index) {
+  if (question.kind === 'visual') {
+    const label = visualObjectLabels[option];
+    return `<button class="answer visual-answer" data-answer="${esc(option)}" aria-label="${esc(label)}"><img src="assets/objects/${esc(option)}.webp" alt="" draggable="false"></button>`;
+  }
+  return `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`;
+}
 function renderQuiz() {
   const movie = state.selectedMovie, question = state.questions[state.questionIndex];
   const progress = (state.streak / 10) * 100;
@@ -504,7 +552,9 @@ function renderQuiz() {
     : question.difficulty === 'intermediate'
       ? `Pregunta ${state.streak + 1} · nivel intermedio`
       : `Pregunta ${state.streak + 1} · nivel fácil`;
-  return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card" id="question-card"><span class="question-kicker">${kicker}</span><h1 class="question-text">${esc(question.text)}</h1><div class="answers">${question.options.map((option, index) => `<button class="answer" data-answer="${esc(option)}"><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${esc(option)}</span></button>`).join('')}</div><div class="timer-row"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
+  const visualClass = question.kind === 'visual' ? ' visual-question-card' : '';
+  const answersClass = question.kind === 'visual' ? ' visual-answers' : '';
+  return `<section class="screen quiz-screen"><div class="quiz-top"><button class="back-link" data-action="quit-quiz">← Cambiar película</button><span class="quiz-movie">${esc(movie.title)}</span></div><div class="question-progress"><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-label">${state.streak + 1} / 10</span></div><div class="question-card${visualClass}" id="question-card"><span class="question-kicker">${kicker}</span><h1 class="question-text">${esc(question.text)}</h1><div class="answers${answersClass}">${question.options.map((option, index) => renderAnswer(question, option, index)).join('')}</div><div class="timer-row"><span>Tiempo restante</span><span class="timer" id="timer">00:${String(state.timer).padStart(2, '0')}</span></div></div></section>`;
 }
 function renderMemoQuiz(movie, question, progress) {
   const isPreview = question.phase === 'preview';
@@ -533,6 +583,7 @@ function renderResult() {
   return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card">${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Vuelvan al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
+  preloadVisualObjects();
   clearInterval(state.timerId); clearInterval(state.cooldownId); state.cooldownId = null; state.lossCount = 0; state.intermediateQueue = []; state.selectedMovie = movie; state.questions = buildRoundQuestions(movie); state.questionIndex = 0; state.streak = 0; state.attempts = 1; state.timer = 10; state.answerLocked = false; state.stats.plays += 1; saveStats(); state.screen = 'quiz'; render();
   if (!state.welcomeShown) { state.welcomeShown = true; showWelcomeModal(); }
   else startTimer();
