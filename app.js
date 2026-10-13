@@ -524,6 +524,7 @@ function buildRoundQuestions(movie) {
 }
 function render() {
   document.body.classList.toggle('quiz-active', state.screen === 'quiz');
+  document.body.classList.toggle('result-active', state.screen === 'result');
   document.querySelector('#app').innerHTML = state.screen === 'home' ? renderHome() : state.screen === 'quiz' ? renderQuiz() : renderResult();
   bindEvents();
 }

@@ -209,9 +209,24 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
   .memo-target { flex: 0 0 auto; min-width: 126px; margin: 3px auto 6px; padding: 6px 11px; border-radius: 2px; font-size: .7rem; }
   .memo-target-symbol { font-size: 1.45rem; }
   .memo-card .timer-row { min-height: 42px; margin-top: 7px; }
-  .result-screen { padding-top: 38px; }
-  .result-layout { grid-template-columns: 1fr; gap: 10px; }
-  .result-side { width: 100%; }
+  body.result-active .app-shell { height: 100dvh; min-height: 100dvh; }
+  body.result-active .topbar { flex-shrink: 0; }
+  body.result-active #app { min-height: 0; }
+  body.result-active .footer { display: none; }
+  .result-screen { height: 100%; padding: 12px 18px calc(12px + env(safe-area-inset-bottom)); display: grid; align-items: center; }
+  .result-layout { grid-template-columns: 1fr; gap: 12px; width: 100%; }
+  .result-icon { display: none; }
+  .result-celebration .eyebrow { font-size: .6rem; margin-bottom: 6px; }
+  .result-screen h1 { font-size: clamp(2rem, 5.5dvh, 3rem); line-height: 1; }
+  .puzzle-label { margin-top: 10px; font-size: .8rem; }
+  .puzzle-answer { font-size: clamp(3rem, 10dvh, 5rem); margin: 6px 0 0; }
+  .result-side { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .result-stats-single { display: block; margin: 0; }
+  .result-stat { display: flex; align-items: baseline; justify-content: center; gap: 7px; padding: 5px 14px; }
+  .result-stat strong { font-size: 1rem; margin: 0; }
+  .result-side .qr-card { width: fit-content; max-width: 100%; margin: 0; padding: 8px; }
+  .result-side .qr-image-frame, .result-side .qr-placeholder { width: min(240px, 35dvh); }
+  .result-side .primary-button { min-height: 44px; padding: 11px 16px; font-size: .68rem; }
   .footer { padding-bottom: 24px; }
 }
 @media (max-width: 700px) and (max-height: 690px) {
@@ -219,6 +234,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--yellow); ou
 }
 @media (max-width: 700px) and (max-height: 620px) {
   .topbar { height: 56px; }
+  .result-side { gap: 8px; }
+  .result-side .qr-image-frame, .result-side .qr-placeholder { width: min(210px, 32dvh); }
   .brand-mark { width: 28px; height: 28px; border-radius: 2px; font-size: 1.05rem; }
   .quiz-screen { height: calc(100dvh - 56px); padding-top: 6px; padding-bottom: 7px; }
   .memo-screen { padding-top: 6px; padding-bottom: 7px; }
