@@ -581,7 +581,7 @@ function renderResult() {
   const qrContent = quizConfig.videoQrImage
     ? `<div class="qr-image-frame"><img src="${esc(quizConfig.videoQrImage)}" alt="Código QR del video sorpresa"></div>`
     : `<div class="qr-placeholder" aria-label="Código QR pendiente">QR</div>`;
-  return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta de este acertijo es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card">${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Vuelvan al menú inicial</button></div></div></div></section>`;
+  return `<section class="screen result-screen"><div class="result-layout"><div class="result-celebration"><div class="result-icon">✦</div><p class="eyebrow">Racha completada</p><h1>Perfecto,<br><em>ganaron.</em></h1><p class="puzzle-label">La respuesta al acertijo de las películas es:</p><div class="puzzle-answer">1</div></div><div class="result-side"><div class="result-stats result-stats-single"><div class="result-stat"><strong>${state.attempts}</strong><span>${attemptLabel}</span></div></div><div class="qr-card">${qrContent}</div><div class="button-row"><button class="primary-button" data-action="go-home">Vuelvan al menú inicial</button></div></div></div></section>`;
 }
 function startQuiz(movie) {
   preloadVisualObjects();
